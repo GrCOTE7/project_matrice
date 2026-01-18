@@ -3,6 +3,10 @@
 
 ## Local
 
+./start.bat
+
+OU
+
 Si 1ère fois
 python -m venv .venv
 
