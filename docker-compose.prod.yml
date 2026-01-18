@@ -1,11 +1,12 @@
-version: "3.9"
-
 # docker compose -f docker-compose.prod.yml up --build -d
+# API → http://localhost:8000/docs
+# Frontend → http://localhost:80
 
 services:
-  api:
+  backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile.prod
     container_name: fastapi_backend
     ports:
       - "8000:8000"
@@ -16,11 +17,14 @@ services:
   frontend:
     build:
       context: ./frontend
-    container_name: streamlit_frontend
+      dockerfile: Dockerfile.prod
+    container_name: react_frontend
     ports:
-      - "8501:8501"
+      - "80:80"
+    environment:
+      - VITE_BACKEND_URL=http://backend:8000
     depends_on:
-      - api
+      - backend
     restart: always
     networks:
       - appnet
