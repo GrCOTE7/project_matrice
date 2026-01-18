@@ -158,89 +158,90 @@ Mais pas pour des applications web destinées à des utilisateurs finaux.
         │            "server_id": "Loading..."}          │
         ◄────────────────────────────────────────────────┤
 
----
+----
+
 🎯 Améliorations Prioritaires
 
-1. Sécurité & Configuration
-Variables d'environnement (.env)
-Créer des fichiers .env pour gérer les configurations :
+1. //2do Sécurité & Configuration
+    Variables d'environnement (.env)
+    Créer des fichiers .env pour gérer les configurations :
 
-Avantages :
+    Avantages :
 
-Pas de secrets en dur dans le code
-Configuration différente par environnement
-Plus facile à déployer
-CORS correctement configuré
-Actuellement manquant dans FastAPI, ce qui peut causer des problèmes en production.
+    Pas de secrets en dur dans le code
+    Configuration différente par environnement
+    Plus facile à déployer
+    CORS correctement configuré
+    Actuellement manquant dans FastAPI, ce qui peut causer des problèmes en production.
 
-Rate limiting
-Protéger vos endpoints contre les abus.
+    Rate limiting
+    Protéger vos endpoints contre les abus.
 
-2. Structure Backend Modulaire
-État actuel : Tout dans main.py
-Problème : Difficile à maintenir quand le projet grandit
+2. //2do Structure Backend Modulaire XXX
+    État actuel : Tout dans main.py
+    Problème : Difficile à maintenir quand le projet grandit
 
-Structure recommandée :
+    Structure recommandée :
 
-3. Gestion d'Erreurs Frontend
-Problèmes actuels :
+3. //2do Gestion d'Erreurs Frontend
+    Problèmes actuels :
 
-Pas de gestion d'erreur pour les fetch
-Pas de retry automatique
-Pas de feedback utilisateur en cas d'échec
+    Pas de gestion d'erreur pour les fetch
+    Pas de retry automatique
+  Pas de feedback utilisateur en cas d'échec
 
-4. Tests Automatisés
-Actuellement manquants, ce qui rend les modifications risquées.
+4. //2do Tests Automatisés
+    Actuellement manquants, ce qui rend les modifications risquées.
 
-À ajouter :
+    À ajouter :
 
-Tests unitaires backend (pytest)
-Tests unitaires frontend (Vitest)
-Tests E2E (Playwright)
+    Tests unitaires backend (pytest)
+    Tests unitaires frontend (Vitest)
+    Tests E2E (Playwright)
 
-5. Base de Données
-Ajouter PostgreSQL ou Redis pour :
+5. //2do Base de Données
+    Ajouter PostgreSQL ou Redis pour :
 
-Persister les données
-Gérer les sessions utilisateurs
-Cache
+    Persister les données
+    Gérer les sessions utilisateurs
+    Cache
 
-6. Monitoring & Logging
-Actuellement : Aucun logging structuré
+6. //2do Monitoring & Logging
+    Actuellement : Aucun logging structuré
 
-À ajouter :
+    À ajouter :
 
-Logging avec niveaux (INFO, ERROR, DEBUG)
-Monitoring des WebSockets actifs
-Métriques de performance
+    Logging avec niveaux (INFO, ERROR, DEBUG)
+    Monitoring des WebSockets actifs
+    Métriques de performance
 
-7. CI/CD
-GitHub Actions pour :
+7. //2do CI/CD
+    GitHub Actions pour :
 
-Linter le code automatiquement
-Exécuter les tests
-Builder les images Docker
-Déployer automatiquement
+    Linter le code automatiquement
+    Exécuter les tests
+    Builder les images Docker
+    Déployer automatiquement
 
-8. Documentation API
-FastAPI génère automatiquement une doc, mais vous pourriez :
+8. //2do Documentation API
+    FastAPI génère automatiquement une doc, mais vous pourriez :
 
-Ajouter des descriptions détaillées aux endpoints
-Créer des exemples d'utilisation
-Documenter les schémas WebSocket
+    Ajouter des descriptions détaillées aux endpoints
+    Créer des exemples d'utilisation
+    Documenter les schémas WebSocket
 
-9. Performance Frontend
-Optimisations possibles :
+9. //2do Performance Frontend
+    Optimisations possibles :
 
-Code splitting (lazy loading des composants)
-Mise en cache des requêtes
-Debounce sur les événements fréquents
-Service Worker pour le mode offline
+    Code splitting (lazy loading des composants)
+    Mise en cache des requêtes
+    Debounce sur les événements fréquents
+  Service Worker pour le mode offline
 
-10. Authentification & Autorisation
-Actuellement : Aucune sécurité
+10. //2do Authentification & Autorisation
+    Actuellement : Aucune sécurité
 
-À ajouter :
+//2do À ajouter :
 
 JWT tokens
 Sessions utilisateurs
