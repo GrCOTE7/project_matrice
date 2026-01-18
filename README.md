@@ -1,6 +1,31 @@
 # Process
 
+
+## Local
+
+Si 1ère fois
+python -m venv .venv
+
+.venv\Scripts\activate
+cd backend
+
+Si 1ère fois
+python.exe -m pip install --upgrade pip
+pip install -r requirements.txt
+
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+Autre CLI :
+Si 1ère fois
+cd frontend
+npm i
+npm run dev
+
 ## Créer Ctnrs Docker
+
+    Dans racine:
+    docker compose -f docker-compose.dev.yml up --build -d
+
 
     * Supprimer l'ancienne image
     docker rmi fastapi_img:v0

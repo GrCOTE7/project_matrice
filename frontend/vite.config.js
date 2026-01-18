@@ -22,8 +22,32 @@ export default defineConfig({
       "/ws": {
         target: BACKEND_URL,
         ws: true,
+        configure: (proxy, _options) => {
+          proxy.on("error", (err, _req, _res) => {
+            if (err.code === "ECONNABORTED" || err.code === "ECONNRESET") {
+              return;
+            }
+            console.log("proxy error", err);
+          });
+          proxy.on("proxyReqWs", (_proxyReq, _req, socket) => {
+            // Force silencieuse : on remplace socket.emit pour intercepter 'error'
+            // avant que Vite ne le loggue.
+            const originalEmit = socket.emit;
+            socket.emit = function (event, ...args) {
+              if (event === "error") {
+                const err = args[0];
+                if (
+                  err &&
+                  (err.code === "ECONNABORTED" || err.code === "ECONNRESET")
+                ) {
+                  return true;
+                }
+              }
+              return originalEmit.apply(this, args);
+            };
+          });
+        },
       },
     },
   },
 });
-
