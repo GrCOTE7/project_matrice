@@ -3,9 +3,9 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const BackendContext = createContext({ isConnected: false });
 
 export const useBackendStatus = () => useContext(BackendContext);
-
 export const BackendProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
+  // Permet à tous les composants d'accéder à l'état isConnected :
 
   useEffect(() => {
     let ws = null;
@@ -27,19 +27,20 @@ export const BackendProvider = ({ children }) => {
 
         if (data.type === "connected") {
           if (currentServerId && currentServerId !== data.server_id) {
-            window.location.reload();
+            window.location.reload(); // 🔄 Rechargement automatique !
           }
-          currentServerId = data.server_id;
+          currentServerId = data.server_id; // Sauvegarde l'ID
         } else if (data.type === "heartbeat") {
           if (currentServerId && data.server_id !== currentServerId) {
-            window.location.reload();
+            window.location.reload(); // 🔄 Rechargement automatique !
           }
         }
       };
 
       ws.onclose = () => {
-        setIsConnected(false);
+        setIsConnected(false); // ❌ Backend déconnecté
         reconnectTimeout = setTimeout(connect, 1000);
+        // Si le backend tombe, le frontend retente automatiquement la connexion
       };
 
       ws.onerror = () => {
@@ -52,6 +53,7 @@ export const BackendProvider = ({ children }) => {
     return () => {
       if (ws) ws.close();
       clearTimeout(reconnectTimeout);
+      // Quand le composant React se démonte, ferme proprement la connexion.
     };
   }, []);
 
