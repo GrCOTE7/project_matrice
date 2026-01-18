@@ -12,12 +12,22 @@ const HelloWorld = () => {
       .catch((err) => console.error(err));
   }, []);
 
+  // Seuil de caractères pour basculer en affichage sur deux lignes
+  const CHAR_LIMIT = 20;
+  const isLong = message.length > CHAR_LIMIT;
+  // Dynamique : div si long (bloc), p/span si court (inline)
+  const Wrapper = isLong ? "div" : "p";
+  const Label = isLong ? "div" : "span";
+
   return (
     <div className="px-3 py-2 bg-linear-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg text-white flex items-center justify-between">
-      <p className="text-md">
-        <span className="text-sm font-bold opacity-80">From "Hello.jsx" :</span>{" "}
-        <span className="ml-1 text-blue-50/90">{message}</span>
-      </p>
+      <Wrapper className="text-md">
+        <Label className="text-sm font-bold opacity-80">
+          From "Hello.jsx" :
+        </Label>
+        {!isLong && " "}
+        <span className="ml-1 italic text-blue-50/90">{message}</span>
+      </Wrapper>
       <span
         className={`ml-4 px-2 py-0.5 rounded-md text-sm font-medium transition-all duration-300 ${
           isConnected
