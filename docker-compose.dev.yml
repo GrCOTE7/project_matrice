@@ -1,0 +1,37 @@
+# docker compose -f docker-compose.dev.yml up --build -d
+# OU
+# docker compose -f docker-compose.dev.yml build --no-cache
+# docker compose -f docker-compose.dev.yml up -d
+# API → http://localhost:8000/docs
+# Frontend → http://localhost:8501
+
+# Pour débuguer: docker compose -f docker-compose.dev.yml build --no-cache --progress=plain
+
+services:
+  backend:
+    build: ./backend
+    container_name: fastapi_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    networks:
+      - appnet
+
+  frontend:
+    build: ./frontend
+    container_name: react_frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_BACKEND_URL=http://backend:8000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+networks:
+  appnet:
