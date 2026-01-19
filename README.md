@@ -1,7 +1,8 @@
-# Process
+# Project Matrice
 
+## Process Démarrage
 
-## Local
+### Local
 
 ./start.bat
 
@@ -25,86 +26,79 @@ cd frontend
 npm i
 npm run dev
 
-## Créer Ctnrs Docker
+### Docker
 
-    Dans racine:
-    docker compose -f docker-compose.dev.yml up --build -d
+#### Lancer Docker-desktop + Containers
 
+Dans racine (Dev):
 
-    * Supprimer l'ancienne image
-    docker rmi fastapi_img:v0
-    
-    * Rebuild avec la nouvelle version
-    <!-- docker build -t fastapi_backend:v0 . -->
-    
-    docker compose up --build
-    
-    On doit voir les fichiers dans le Cntnr
-    docker exec -it fastapi_backend_dev ls -l /app
+docker compose -f docker-compose.dev.yml up --build -d
 
-    
-    * Test
-    
-    api-app :
-    docker run -p 8000:8000 fastapi_img:v0
-    todo-app :
-    docker run -p 8000:8080 fastapi_img:v0
-    
-    (port_local:port_docker)
+OU (Prod):
 
-// 2do une structure complète dev/prod
+docker compose -f docker-compose.prod.yml up --build -d
 
-.env :
-Windows PowerShell
-Code
-$env:API_URL="http://api:8000"
-Linux / macOS
-Code
-export API_URL=http://api:8000
-Docker
-docker exec -it streamlit_frontend_dev env
+#### Créer Ctnrs Docker
 
-une optimisation de ton Dockerfile TensorFlow
+* Supprimer l'ancienne image
+docker rmi fastapi_img:v0
 
-une config VS Code pour développer dans le conteneur
+* Rebuild avec la nouvelle version
+<!-- docker build -t fastapi_backend:v0 . -->
 
-----
+docker compose up --build
 
+On doit voir les fichiers dans le Cntnr
+docker exec -it fastapi_backend_dev ls -l /app
 
-Si tu veux, je peux t’aider à aller encore plus loin :
+* Test
 
-ajouter un reverse proxy Nginx ou Traefik
+api-app :
+docker run -p 8000:8000 fastapi_img:v0
+todo-app :
+docker run -p 8000:8080 fastapi_img:v0
+(port_local:port_docker)
 
-activer HTTPS automatiquement (Let’s Encrypt)
+## Project Matrice
 
-optimiser la taille de tes images
+Application web professionnelle basée sur :
 
-préparer un déploiement sur un VPS, Render, Railway, Cloud Run
+* React (frontend)
+* Django (core back‑office/auth)
+* FastAPI (services critiques)
 
-----
+L’objectif est d’avoir une UI moderne et réactive, une base back‑office robuste (auth, admin, RBAC) et des services performants pour les besoins critiques.
 
+Pour le dev, possibilité de démarrer 100% en local ou 100% en Docker. Dans les 2 cas, les hotreload + rafraichissement du navigateur (grâce à WS).
 
+---
 
+## Architecture cible
 
+┌─────────────────┐         REST/WS          ┌──────────────────┐
+│  React Frontend │◄────────────────────────►│ FastAPI Services │
+│  (port 5173)    │                          │ (port 8000/...)  │
+└─────────────────┘                          └──────────────────┘
+     │                                                 ▲
+     │ REST/SSR                                        │
+     ▼                                                 │
+┌─────────────────┐            REST/GraphQL            │
+│ Django Backend  │◄───────────────────────────────────┘
+│ (auth/admin)    │
+│ (port 8001)     │
+└─────────────────┘
 
-🧠 Pourquoi c’est la base professionnelle ?
-séparation claire frontend / backend
+Responsabilités :
 
-hot‑reload complet
+* React : UI, routing front, state management
+* Django : auth, admin, utilisateurs, RBAC, pages SSR si besoin
+* FastAPI : services critiques, WebSockets, traitements lourds
 
-React + Vite = standard moderne
+---
 
-FastAPI = API rapide, typée, scalable
+## Structure recommandée
 
-Docker = reproductible, portable
-
-docker‑compose = orchestration simple
-
-Si tu veux, je peux aussi t’ajouter :
-
-une version production (Nginx + build React + Gunicorn)
-
-une structure plus modulaire (routers, services, hooks React)
+FastAPI (services critiques) :
 
 backend/
 ├── app/
@@ -122,157 +116,102 @@ backend/
 │   └── middleware/        # CORS, auth, etc.
 │       └── __init__.py
 
-un système d’auth JWT complet
+Django (core back‑office/auth) :
 
-un template GitHub Actions CI/CD
-
-🔥 Expérience développeur (DX) optimale
-Backend (FastAPI)
-Uvicorn --reload
-
-Tests unitaires
-
-Typage Pydantic
-
-OpenAPI auto‑généré
-
-Frontend (React/Vite)
-Hot‑reload instantané
-
-Auto-refresh du navigateur
-
-WebSockets intégrés
-
-Build optimisé pour la prod
-
-Communication
-Le frontend appelle le backend via http://api:8000
-
-Le backend ne sert pas le frontend (séparation claire)
+backend/
+├── app/
+│   ├── ...
+├── django/
+│   ├── manage.py
+│   ├── config/                # settings, urls, wsgi/asgi
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── wsgi.py
+│   │   └── asgi.py
+│   ├── apps/
+│   │   ├── users/             # users, roles, permissions
+│   │   ├── auth/              # auth/jwt/SSO
+│   │   └── adminpanel/        # back-office
+│   └── requirements.txt
 
 ---
 
-🥇 Conclusion
-✔️ La solution professionnelle la plus adoptée :
-FastAPI (backend) + React/Vite (frontend)  
-→ hot‑reload complet
-→ séparation claire
-→ scalable
-→ maintenable
-→ standard de l’industrie
+## Exécution locale (dev)
 
-✔️ Streamlit est utilisé pour :
-prototypes
+Option rapide :
+./start.bat
 
-dashboards internes
+Manuel :
+1) FastAPI
+- Créer un venv : python -m venv .venv
+- Activer : .venv\Scripts\activate
+- Installer : pip install -r backend/requirements.txt
+- Lancer : uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
-outils data
+2) Django
+- Installer : pip install -r backend/django/requirements.txt
+- Migrations : python backend/django/manage.py migrate
+- Lancer : python backend/django/manage.py runserver 0.0.0.0:8001
 
-Mais pas pour des applications web destinées à des utilisateurs finaux.
+3) React
+- Installer : npm i (dans frontend)
+- Lancer : npm run dev
 
 ---
 
-┌─────────────────┐          WebSocket          ┌──────────────────┐
-│  React Frontend │◄───────────────────────────►│  FastAPI Backend │
-│  (port 5173)    │      ws://host/ws/reload    │   (port 8000)    │
-└─────────────────┘                             └──────────────────┘
-        │                                                │
-        │ fetch("/api/hello")                            │
-        ├────────────────────────────────────────────────►
-        │                                                │
-        │ {"message": "Hello from FastAPI!"}             │
-        ◄────────────────────────────────────────────────┤
-        │                                                │
-        │ WebSocket: {"type": "heartbeat",               │
-        │            "server_id": "Loading..."}          │
-        ◄────────────────────────────────────────────────┤
+## Docker (dev)
 
-----
+docker compose -f docker-compose.dev.yml up --build -d
 
-🎯 Améliorations Prioritaires
+---
 
-1. //2do Sécurité & Configuration
-    Variables d'environnement (.env)
-    Créer des fichiers .env pour gérer les configurations :
+## Configuration (.env)
 
-    Avantages :
+Variables minimales (exemple) :
+- API_URL=http://api:8000
+- DJANGO_URL=http://core:8001
 
-    Pas de secrets en dur dans le code
-    Configuration différente par environnement
-    Plus facile à déployer
-    CORS correctement configuré
-    Actuellement manquant dans FastAPI, ce qui peut causer des problèmes en production.
+---
 
-    Rate limiting
-    Protéger vos endpoints contre les abus.
+## Reverse proxy (recommandé)
 
-2. //2do Structure Backend Modulaire XXX
-    État actuel : Tout dans main.py
-    Problème : Difficile à maintenir quand le projet grandit
+Ajouter Nginx/Traefik pour router :
+- /api/core -> Django
+- /api/service -> FastAPI
+- / -> React
 
-    Structure recommandée :
+---
 
-3. //2do Gestion d'Erreurs Frontend
-    Problèmes actuels :
+## Auth commune (SSO/JWT)
 
-    Pas de gestion d'erreur pour les fetch
-    Pas de retry automatique
-  Pas de feedback utilisateur en cas d'échec
+- Django émet le token (login)
+- FastAPI valide le token (accès aux services critiques)
 
-4. //2do Tests Automatisés
-    Actuellement manquants, ce qui rend les modifications risquées.
+---
 
-    À ajouter :
+## Roadmap priorisée
 
-    Tests unitaires backend (pytest)
-    Tests unitaires frontend (Vitest)
-    Tests E2E (Playwright)
+P0 (bloquant)
+- Sécurité & configuration (.env, CORS, secrets)
+- Auth JWT + RBAC
+- Reverse proxy + routing
 
-5. //2do Base de Données
-    Ajouter PostgreSQL ou Redis pour :
+P1 (pro)
+- Tests (pytest, Vitest, Playwright)
+- CI/CD (lint, tests, build, push image)
+- Logging structuré + metrics
 
-    Persister les données
-    Gérer les sessions utilisateurs
-    Cache
+P2 (scale)
+- Cache/DB (PostgreSQL/Redis)
+- Observabilité (traces, dashboards)
+- Versioning API + doc enrichie
 
-6. //2do Monitoring & Logging
-    Actuellement : Aucun logging structuré
+---
 
-    À ajouter :
+## Notes
 
-    Logging avec niveaux (INFO, ERROR, DEBUG)
-    Monitoring des WebSockets actifs
-    Métriques de performance
-
-7. //2do CI/CD
-    GitHub Actions pour :
-
-    Linter le code automatiquement
-    Exécuter les tests
-    Builder les images Docker
-    Déployer automatiquement
-
-8. //2do Documentation API
-    FastAPI génère automatiquement une doc, mais vous pourriez :
-
-    Ajouter des descriptions détaillées aux endpoints
-    Créer des exemples d'utilisation
-    Documenter les schémas WebSocket
-
-9. //2do Performance Frontend
-    Optimisations possibles :
-
-    Code splitting (lazy loading des composants)
-    Mise en cache des requêtes
-    Debounce sur les événements fréquents
-  Service Worker pour le mode offline
-
-10. //2do Authentification & Autorisation
-    Actuellement : Aucune sécurité
-
-//2do À ajouter :
-
-JWT tokens
-Sessions utilisateurs
-Rôles et permissions
-OAuth2 (Google, GitHub)
+- Le frontend appelle les APIs via le proxy.
+- Le backend ne sert pas le frontend directement.
+- Les responsabilités sont découplées pour scaler proprement.
+→ APIs rapides et scalables
