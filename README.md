@@ -1,6 +1,5 @@
 # Project Matrice
 
-
 ## Application web professionnelle
 
 Basée sur :
@@ -18,24 +17,39 @@ Pour le dev, possibilité de démarrer 100% en local ou 100% en Docker. Dans les
 ### Local
 
 ```css
-./start.bat
+./start
 ```
 
-//2do récupé .bat de fastAPI (+ complet) et adapté dedans démarrage de Django en vérifiant que celui-ci bénéficie aussi du complet hotreload
+Attention: La 1ère fois :
 
-OU
+```css
+./setup
+```
+
+À l'issue :
+
+* [API](http://localhost:8000/docs)
+* [BE](http://localhost:8001/admin) → Login: admin / admin
+* [FE](http://localhost:5173)
+
+**Note :** Un seul environnement virtuel à la racine (`.venv/`) contient toutes les dépendances Python (FastAPI + Django).
+
+OU, 'à la main' :
 
 1) BE - FastAPI
 
    * Créer un venv : python -m venv .venv
    * Activer : .venv\Scripts\activate
-   * Installer : pip install -r backend/requirements.txt
+   * Installer :
+     * python -m pip install --upgrade pip
+     * pip install -r backend/requirements.txt
    * Lancer : uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
 
 2) BE - Django
 
    * Installer : pip install -r backend/django/requirements.txt
    * Migrations : python backend/django/manage.py migrate
+   * Créer admin : python backend/django/manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@localhost', 'admin')"
    * Lancer : python backend/django/manage.py runserver 0.0.0.0:8001
 
 3) FE - React
@@ -81,7 +95,7 @@ docker run -p 8000:8080 fastapi_img:v0
 
 ---
 
-## Architecture cible
+## Architecture
 
 <!--
 ┌─────────────────┐         REST/WS          ┌──────────────────┐
@@ -171,13 +185,49 @@ frontend
 
 ## Configuration (.env)
 
-Variables minimales (exemple) :
+**⚠️ IMPORTANT : Sécurité implémentée !**
+
+Les fichiers `.env` sont maintenant requis pour configurer l'application de manière sécurisée.
+
+### Première installation
 
 ```bash
-ENV=dev
-API_URL=http://api:8000
-DJANGO_URL=http://core:8001
+# Windows
+setup.bat
+
+# Ou manuellement
+cp .env.example .env
+# Éditer .env avec vos valeurs
 ```
+
+### Variables essentielles
+
+```bash
+# Environnement
+ENV=dev                          # dev, staging, prod
+
+# FastAPI
+FASTAPI_PORT=8000
+FASTAPI_CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+
+# Django
+DJANGO_SECRET_KEY=votre-cle-secrete-50-caracteres-minimum
+DJANGO_DEBUG=True                # False en production !
+DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+DJANGO_CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+
+# Frontend
+VITE_BACKEND_URL=http://localhost:8000
+VITE_DJANGO_URL=http://localhost:8001
+```
+
+### Générer une SECRET_KEY sécurisée
+
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+**📖 Consultez [SECURITY.md](SECURITY.md) pour le guide complet de sécurité**
 
 ---
 
@@ -185,7 +235,12 @@ DJANGO_URL=http://core:8001
 
 P0 (bloquant)
 
-- Sécurité & configuration (.env, CORS, secrets)
+- ✅ **Sécurité & configuration (.env, CORS, secrets)** - IMPLÉMENTÉ
+  - Fichiers .env pour tous les services
+  - CORS configuré (FastAPI + Django)
+  - Secrets externalisés
+  - Configuration par environnement
+  - Voir [SECURITY.md](SECURITY.md)
 - Auth JWT + RBAC
 - Reverse proxy + routing
 

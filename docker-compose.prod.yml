@@ -9,7 +9,9 @@ services:
       dockerfile: Dockerfile.prod
     container_name: fastapi_backend
     ports:
-      - "8000:8000"
+      - "${FASTAPI_PORT:-8000}:8000"
+    env_file:
+      - ./backend/.env
     restart: always
     networks:
       - appnet
@@ -20,7 +22,9 @@ services:
       dockerfile: Dockerfile.prod
     container_name: django_backend
     ports:
-      - "8001:8001"
+      - "${DJANGO_PORT:-8001}:8001"
+    env_file:
+      - ./backend/django/.env
     restart: always
     networks:
       - appnet
@@ -32,10 +36,14 @@ services:
     container_name: react_frontend
     ports:
       - "80:80"
+    env_file:
+      - .env
     environment:
-      - VITE_BACKEND_URL=http://backend:8000
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:8000}
+      - VITE_DJANGO_URL=${VITE_DJANGO_URL:-http://localhost:8001}
     depends_on:
       - backend
+      - django
     restart: always
     networks:
       - appnet

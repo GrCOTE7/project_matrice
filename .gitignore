@@ -12,6 +12,9 @@ ENV/
 dist/
 build/
 
+# Env virtuel (un seul à la racine)
+.venv/
+
 # Node
 node_modules/
 dist/

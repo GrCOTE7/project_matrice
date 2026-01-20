@@ -1,0 +1,41 @@
+"""Configuration centralisée pour FastAPI."""
+
+import os
+from typing import List
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement
+load_dotenv()
+
+
+class Settings:
+    """Configuration de l'application FastAPI."""
+
+    # Environnement
+    ENV: str = os.getenv("ENV", "dev")
+
+    # Serveur
+    HOST: str = os.getenv("FASTAPI_HOST", "0.0.0.0")
+    PORT: int = int(os.getenv("FASTAPI_PORT", "8000"))
+    RELOAD: bool = os.getenv("FASTAPI_RELOAD", "True").lower() == "true"
+
+    # CORS
+    CORS_ORIGINS: List[str] = os.getenv(
+        "FASTAPI_CORS_ORIGINS", "http://localhost:5173,http://localhost:3000"
+    ).split(",")
+
+    # Logging
+    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
+
+    @property
+    def is_dev(self) -> bool:
+        """Vérifie si on est en mode développement."""
+        return self.ENV == "dev"
+
+    @property
+    def is_prod(self) -> bool:
+        """Vérifie si on est en mode production."""
+        return self.ENV == "prod"
+
+
+settings = Settings()
