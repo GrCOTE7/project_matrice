@@ -105,17 +105,25 @@ flowchart LR
     DJ <-->|REST/GraphQL| FA
 ```
 
-Responsabilités :
-
-* React : UI, routing front, state management
-* Django : auth, admin, utilisateurs, RBAC, pages SSR si besoin
-* FastAPI : services critiques, WebSockets, traitements lourds
-
----
-
-## Structure recommandée
-
 FastAPI (services critiques) :
+
+<!--
+backend/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── config.py          # Configuration centralisée
+│   ├── routers/           # Routes organisées
+│   │   ├── __init__.py
+│   │   ├── api.py
+│   │   └── websocket.py
+│   ├── services/          # Logique métier
+│   │   └── __init__.py
+│   ├── models/            # Modèles Pydantic
+│   │   └── __init__.py
+│   └── middleware/        # CORS, auth, etc.
+│       └── __init__.py
+-->
 
 backend/
 ├── app/
@@ -135,6 +143,7 @@ backend/
 
 Django (core back‑office/auth) :
 
+<!--
 backend/
 ├── app/
 │   ├── ...
@@ -151,7 +160,24 @@ backend/
 │   │   ├── auth/              # auth/jwt/SSO
 │   │   └── adminpanel/        # back-office
 │   └── requirements.txt
+-->
 
+backend/
+├── app/
+│   ├── ...
+├── django/
+│   ├── manage.py
+│   ├── config/                # settings, urls, wsgi/asgi
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── wsgi.py
+│   │   └── asgi.py
+│   ├── apps/
+│   │   ├── users/             # users, roles, permissions
+│   │   ├── auth/              # auth/jwt/SSO
+│   │   └── adminpanel/        # back-office
+│   └── requirements.txt
 ---
 
 ## Configuration (.env)
