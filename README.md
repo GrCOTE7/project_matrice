@@ -83,6 +83,7 @@ docker run -p 8000:8080 fastapi_img:v0
 
 ## Architecture cible
 
+<!--
 ┌─────────────────┐         REST/WS          ┌──────────────────┐
 │  React Frontend │◄────────────────────────►│ FastAPI Services │
 │  (port 5173)    │                          │ (port 8000/...)  │
@@ -95,6 +96,14 @@ docker run -p 8000:8080 fastapi_img:v0
 │ (auth/admin)    │
 │ (port 8001)     │
 └─────────────────┘
+-->
+
+```mermaid
+flowchart LR
+    FE["React Frontend<br/>(port 5173)"] <-->|REST/WS| FA["FastAPI Services<br/>(port 8000/...)"]
+    FE -- REST/SSR --> DJ["Django Backend<br/>(auth/admin)<br/>(port 8001)"]
+    DJ <-->|REST/GraphQL| FA
+```
 
 Responsabilités :
 
@@ -145,7 +154,6 @@ backend/
 
 ---
 
-
 ## Configuration (.env)
 
 Variables minimales (exemple) :
@@ -161,6 +169,7 @@ DJANGO_URL=http://core:8001
 ## Roadmap priorisée
 
 P0 (bloquant)
+
 - Sécurité & configuration (.env, CORS, secrets)
 - Auth JWT + RBAC
 - Reverse proxy + routing
