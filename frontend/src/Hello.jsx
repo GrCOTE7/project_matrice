@@ -26,13 +26,22 @@ const HelloWorld = () => {
           From "Hello.jsx" :
         </Label>
         {!isLong && " "}
-        <span className="ml-1 italic text-blue-50/90">{message}</span>
+        <span
+          className={`font-semibold transition-all duration-500 ${
+            isConnected
+            ? "text-gray-200 px-1"
+            : "bg-red-400/20 rounded-md text-blue-100 animate-pulse italic px-1"
+          }`}
+        >
+          {message}
+        </span>
+        {/* <span className="ml-1 text-blue-50/90">{message}</span> */}
       </Wrapper>
       <span
         className={`ml-4 px-2 py-0.5 rounded-md text-sm font-medium transition-all duration-300 ${
           isConnected
             ? "bg-green-400/20 text-green-400"
-            : "bg-red-400/20 text-red-100"
+            : "bg-red-400/20 text-red-100 italic"
         }`}
       >
         Backend: {isConnected ? "✅" : "❌"}

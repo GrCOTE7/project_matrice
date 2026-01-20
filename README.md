@@ -1,10 +1,25 @@
 # Project Matrice
 
-## Process Démarrage
+
+## Application web professionnelle
+
+Basée sur :
+
+* React (frontend)
+* Django (core back‑office/auth)
+* FastAPI (services critiques)
+
+L’objectif est d’avoir une UI moderne et réactive, une base back‑office robuste (auth, admin, RBAC) et des services performants pour les besoins critiques.
+
+Pour le dev, possibilité de démarrer 100% en local ou 100% en Docker. Dans les 2 cas, les hotreload + rafraichissement du navigateur (grâce à WS).
+
+## Processes Démarrage
 
 ### Local
 
+```css
 ./start.bat
+```
 
 //2do récupé .bat de fastAPI (+ complet) et adapté dedans démarrage de Django en vérifiant que celui-ci bénéficie aussi du complet hotreload
 
@@ -12,25 +27,18 @@ OU
 
 1) BE - FastAPI
 
-    Si 1ère fois
-    python -m venv .venv
+   * Créer un venv : python -m venv .venv
+   * Activer : .venv\Scripts\activate
+   * Installer : pip install -r backend/requirements.txt
+   * Lancer : uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
 
-    * .venv\Scripts\activate
-    * cd backend
-
-    * Si 1ère fois
-    python.exe -m pip install --upgrade pip
-    pip install -r requirements.txt
-
-    * uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-
-1) BE - Django
+2) BE - Django
 
    * Installer : pip install -r backend/django/requirements.txt
    * Migrations : python backend/django/manage.py migrate
    * Lancer : python backend/django/manage.py runserver 0.0.0.0:8001
 
-1) FE - React
+3) FE - React
 
     Autre CLI :
     cd frontend
@@ -50,7 +58,7 @@ OU (Prod):
 
 docker compose -f docker-compose.prod.yml up --build -d
 
-#### Créer Ctnrs Docker
+#### 1ère fois: Créer Ctnrs Docker
 
 * Supprimer l'ancienne image
 docker rmi fastapi_img:v0
@@ -70,18 +78,6 @@ docker run -p 8000:8000 fastapi_img:v0
 todo-app :
 docker run -p 8000:8080 fastapi_img:v0
 (port_local:port_docker)
-
-## Project Matrice
-
-Application web professionnelle basée sur :
-
-* React (frontend)
-* Django (core back‑office/auth)
-* FastAPI (services critiques)
-
-L’objectif est d’avoir une UI moderne et réactive, une base back‑office robuste (auth, admin, RBAC) et des services performants pour les besoins critiques.
-
-Pour le dev, possibilité de démarrer 100% en local ou 100% en Docker. Dans les 2 cas, les hotreload + rafraichissement du navigateur (grâce à WS).
 
 ---
 
@@ -149,59 +145,16 @@ backend/
 
 ---
 
-## Exécution locale (dev)
-
-Option rapide :
-./start.bat
-
-Manuel :
-
-1) FastAPI
-
-   * Créer un venv : python -m venv .venv
-   * Activer : .venv\Scripts\activate
-   * Installer : pip install -r backend/requirements.txt
-   * Lancer : uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-
-2) Django
-
-   * Installer : pip install -r backend/django/requirements.txt
-   * Migrations : python backend/django/manage.py migrate
-   * Lancer : python backend/django/manage.py runserver 0.0.0.0:8001
-
-3) React
-   * Installer : npm i (dans frontend)
-   * Lancer : npm run dev
-
----
-
-## Docker (dev)
-
-docker compose -f docker-compose.dev.yml up --build -d
-
----
 
 ## Configuration (.env)
 
 Variables minimales (exemple) :
-- API_URL=http://api:8000
-- DJANGO_URL=http://core:8001
 
----
-
-## Reverse proxy (recommandé)
-
-Ajouter Nginx/Traefik pour router :
-- /api/core -> Django
-- /api/service -> FastAPI
-- / -> React
-
----
-
-## Auth commune (SSO/JWT)
-
-- Django émet le token (login)
-- FastAPI valide le token (accès aux services critiques)
+```bash
+ENV=dev
+API_URL=http://api:8000
+DJANGO_URL=http://core:8001
+```
 
 ---
 
