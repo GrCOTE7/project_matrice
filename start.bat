@@ -29,5 +29,3 @@ echo   NOTE: Les fenetres sont reduites dans la barre des taches.
 echo         Fermez-les manuellement pour arreter les serveurs.
 echo ===================================================
 @REM pause
-
-@REM //2do récc .bat de fast api (+ complet)

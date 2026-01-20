@@ -18,6 +18,16 @@ services:
     networks:
       - appnet
 
+  django:
+    build: ./backend/django
+    container_name: django_backend
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend/django:/app
+    networks:
+      - appnet
+
   frontend:
     build: ./frontend
     container_name: react_frontend
