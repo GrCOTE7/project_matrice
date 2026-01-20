@@ -6,25 +6,37 @@
 
 ./start.bat
 
+//2do récupé .bat de fastAPI (+ complet) et adapté dedans démarrage de Django en vérifiant que celui-ci bénéficie aussi du complet hotreload
+
 OU
 
-Si 1ère fois
-python -m venv .venv
+1) BE - FastAPI
 
-.venv\Scripts\activate
-cd backend
+    Si 1ère fois
+    python -m venv .venv
 
-Si 1ère fois
-python.exe -m pip install --upgrade pip
-pip install -r requirements.txt
+    * .venv\Scripts\activate
+    * cd backend
 
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    * Si 1ère fois
+    python.exe -m pip install --upgrade pip
+    pip install -r requirements.txt
 
-Autre CLI :
-Si 1ère fois
-cd frontend
-npm i
-npm run dev
+    * uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+1) BE - Django
+
+   * Installer : pip install -r backend/django/requirements.txt
+   * Migrations : python backend/django/manage.py migrate
+   * Lancer : python backend/django/manage.py runserver 0.0.0.0:8001
+
+1) FE - React
+
+    Autre CLI :
+    cd frontend
+   * Si 1ère fois
+     Installer : npm i (dans frontend)
+   * Lancer : npm run dev
 
 ### Docker
 
@@ -143,20 +155,23 @@ Option rapide :
 ./start.bat
 
 Manuel :
+
 1) FastAPI
-- Créer un venv : python -m venv .venv
-- Activer : .venv\Scripts\activate
-- Installer : pip install -r backend/requirements.txt
-- Lancer : uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+   * Créer un venv : python -m venv .venv
+   * Activer : .venv\Scripts\activate
+   * Installer : pip install -r backend/requirements.txt
+   * Lancer : uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 2) Django
-- Installer : pip install -r backend/django/requirements.txt
-- Migrations : python backend/django/manage.py migrate
-- Lancer : python backend/django/manage.py runserver 0.0.0.0:8001
+
+   * Installer : pip install -r backend/django/requirements.txt
+   * Migrations : python backend/django/manage.py migrate
+   * Lancer : python backend/django/manage.py runserver 0.0.0.0:8001
 
 3) React
-- Installer : npm i (dans frontend)
-- Lancer : npm run dev
+   * Installer : npm i (dans frontend)
+   * Lancer : npm run dev
 
 ---
 
@@ -215,3 +230,70 @@ P2 (scale)
 - Le backend ne sert pas le frontend directement.
 - Les responsabilités sont découplées pour scaler proprement.
 → APIs rapides et scalables
+
+----
+
+Dans une version de Battle Plan (BP) précédente, on avait cela comme targets...
+Vérifier qu'elle sont atteintes (sous autre forme peut-être) dans l'actuelle BP
+🎯 Améliorations Prioritaires
+1. //2do Sécurité & Configuration
+    Variables d'environnement (.env)
+    Créer des fichiers .env pour gérer les configurations :
+    Avantages :
+    Pas de secrets en dur dans le code
+    Configuration différente par environnement
+    Plus facile à déployer
+    CORS correctement configuré
+    Actuellement manquant dans FastAPI, ce qui peut causer des problèmes en production.
+    Rate limiting
+    Protéger vos endpoints contre les abus.
+2. //2do Structure Backend Modulaire XXX
+    État actuel : Tout dans main.py
+    Problème : Difficile à maintenir quand le projet grandit
+    Structure recommandée :
+3. //2do Gestion d'Erreurs Frontend
+    Problèmes actuels :
+    Pas de gestion d'erreur pour les fetch
+    Pas de retry automatique
+  Pas de feedback utilisateur en cas d'échec
+4. //2do Tests Automatisés
+    Actuellement manquants, ce qui rend les modifications risquées.
+    À ajouter :
+    Tests unitaires backend (pytest)
+    Tests unitaires frontend (Vitest)
+    Tests E2E (Playwright)
+5. //2do Base de Données
+    Ajouter PostgreSQL ou Redis pour :
+    Persister les données
+    Gérer les sessions utilisateurs
+    Cache
+6. //2do Monitoring & Logging
+    Actuellement : Aucun logging structuré
+    À ajouter :
+    Logging avec niveaux (INFO, ERROR, DEBUG)
+    Monitoring des WebSockets actifs
+    Métriques de performance
+7. //2do CI/CD
+    GitHub Actions pour :
+    Linter le code automatiquement
+    Exécuter les tests
+    Builder les images Docker
+    Déployer automatiquement
+8. //2do Documentation API
+    FastAPI génère automatiquement une doc, mais vous pourriez :
+    Ajouter des descriptions détaillées aux endpoints
+    Créer des exemples d'utilisation
+    Documenter les schémas WebSocket
+9. //2do Performance Frontend
+    Optimisations possibles :
+    Code splitting (lazy loading des composants)
+    Mise en cache des requêtes
+    Debounce sur les événements fréquents
+  Service Worker pour le mode offline
+10. //2do Authentification & Autorisation
+    Actuellement : Aucune sécurité
+//2do À ajouter :
+JWT tokens
+Sessions utilisateurs
+Rôles et permissions
+OAuth2 (Google, GitHub)
