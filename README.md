@@ -208,7 +208,7 @@ VITE_DJANGO_URL=http://localhost:8001
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-**📖 Consultez [SECURITY.md](doc/SECURITY.md) pour le guide complet de sécurité**
+**📖 Consultez [SECURITY.md](z_doc/SECURITY.md) pour le guide complet de sécurité**
 
 ---
 
@@ -221,7 +221,7 @@ P0 (bloquant)
   - CORS configuré (FastAPI + Django)
   - Secrets externalisés
   - Configuration par environnement
-  - Voir [SECURITY.md](doc/SECURITY.md)
+  - Voir [SECURITY.md](z_doc/SECURITY.md)
 - Auth JWT + RBAC
 - Reverse proxy + routing
 
