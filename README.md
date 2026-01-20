@@ -74,27 +74,6 @@ OU (Prod):
 
 docker compose -f docker-compose.prod.yml up --build -d
 
-#### 1ère fois: Créer Ctnrs Docker
-
-* Supprimer l'ancienne image
-docker rmi fastapi_img:v0
-
-* Rebuild avec la nouvelle version
-<!-- docker build -t fastapi_backend:v0 . -->
-
-docker compose up --build
-
-On doit voir les fichiers dans le Cntnr
-docker exec -it fastapi_backend_dev ls -l /app
-
-* Test
-
-api-app :
-docker run -p 8000:8000 fastapi_img:v0
-todo-app :
-docker run -p 8000:8080 fastapi_img:v0
-(port_local:port_docker)
-
 ---
 
 ## Architecture
