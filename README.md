@@ -107,7 +107,7 @@ flowchart LR
 
 FastAPI (services critiques) :
 
-```bash
+```php
 backend/
 ├── app/
 │   ├── __init__.py
@@ -127,7 +127,7 @@ backend/
 
 Django (core back‑office/auth) :
 
-```bash
+```php
 backend/
 ├── app/
 │   ├── ...
@@ -145,6 +145,28 @@ backend/
 │   │   └── adminpanel/        # back-office
 │   └── requirements.txt
 ```
+
+React (frontend) :
+
+```php
+frontend
+├── public/                   # Assets statiques
+├── src/
+│   ├── main.jsx              # Point d'entrée
+│   ├── App.jsx               # Composant racine
+│   ├── index.css             # Styles globaux
+│   ├── assets/               # Images, fonts
+│   └── context/              # Context API
+│       └── BackendContext.jsx
+├── index.html
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+├── eslint.config.js
+├── Dockerfile
+└── Dockerfile.prod
+```
+
 ---
 
 ## Configuration (.env)
