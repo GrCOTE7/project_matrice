@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // Dans Docker, on utilisera le nom du service "backend".
 // En local, on garde "localhost".
+// Note: Vite utilise cette URL pour le proxy côté serveur (dans le conteneur)
 const BACKEND_URL = process.env.VITE_BACKEND_URL || "http://localhost:8000";
 
 // https://vite.dev/config/

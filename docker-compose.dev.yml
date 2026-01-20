@@ -40,8 +40,8 @@ services:
     env_file:
       - .env
     environment:
-      - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:8000}
-      - VITE_DJANGO_URL=${VITE_DJANGO_URL:-http://localhost:8001}
+      - VITE_BACKEND_URL=http://backend:8000
+      - VITE_DJANGO_URL=http://django:8001
     volumes:
       - ./frontend:/app
       - /app/node_modules

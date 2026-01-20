@@ -147,13 +147,16 @@ echo   Installation terminee !
 echo ========================================
 echo.
 echo Prochaines etapes:
-echo   1. Editez .env avec vos parametres
-echo   2. Lancez l'application: start.bat
-echo   3. Connectez-vous a Django Admin: http://localhost:8001/admin/
+echo   1. Editez .env avec vos parametres si necessaire
+echo   2. Django Admin: http://localhost:8001/admin/
 echo      Login: admin / Password: admin
-echo   4. Consultez SECURITY.md pour la checklist de securite
+echo   3. Consultez SECURITY.md pour la checklist de securite
 echo.
 echo Pour generer une cle Django secrete:
 echo   python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 echo.
-@REM pause
+echo ========================================
+echo   Lancement de l'application...
+echo ========================================
+echo.
+call start.bat

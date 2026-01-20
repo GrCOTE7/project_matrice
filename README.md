@@ -64,6 +64,8 @@ OU, 'à la main' :
 
 #### Lancer Docker-desktop + Containers
 
+Note: Avoir fait fontionné l'App en mode local au préalable
+
 Dans racine (Dev):
 
 docker compose -f docker-compose.dev.yml up --build -d
