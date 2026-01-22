@@ -20,11 +20,21 @@ Pour le dev, possibilité de démarrer 100% en local ou 100% en Docker. Dans les
 ./start
 ```
 
+**💡 Note importante :** Si des services tournent déjà, `start.bat` vous proposera de les arrêter automatiquement.
+
 Attention: La 1ère fois :
 
 ```css
 ./setup
 ```
+
+### Arrêter les services
+
+```css
+./stop
+```
+
+Arrête proprement tous les services (FastAPI, Django, React).
 
 À l'issue :
 
