@@ -254,68 +254,78 @@ Vérifier chaque point et qu'elles sont atteintes (sous autre forme peut-être) 
 🎯 Améliorations Prioritaires :
 
 1. //2do Sécurité & Configuration
-    CORS correctement configuré
-    Actuellement manquant dans FastAPI, ce qui peut causer des problèmes en production.
-    Rate limiting
-    Protéger vos endpoints contre les abus.
 
-2. //2do Structure Backend Modulaire XXX
+    CORS correctement configuré, mais aActuellement manquant dans FastAPI :
+    * Rate limiting
+    * Protéger vos endpoints contre les abus.
+
+2. //2do Structure Backend Modulaire
+
     État actuel : Tout dans main.py
     Problème : Difficile à maintenir quand le projet grandit
-    Structure recommandée :
+    * Structure à revoir
 
 3. //2do Gestion d'Erreurs Frontend
+
     Problèmes actuels :
-    Pas de gestion d'erreur pour les fetch
-    Pas de retry automatique
-  Pas de feedback utilisateur en cas d'échec
+    * Pas de gestion d'erreur pour les fetch
+    * Pas de retry automatique
+    * Pas de feedback utilisateur en cas d'échec
 
 4. //2do Tests Automatisés
-    Actuellement manquants, ce qui rend les modifications risquées.
-    À ajouter :
-    Tests unitaires backend (pytest)
-    Tests unitaires frontend (Vitest)
+
+    Actuellement manquants, ce qui rend les modifications risquées. À ajouter :
+    * Tests unitaires backend (pytest)
+    * Tests unitaires frontend (Vitest)
     Tests E2E (Playwright)
-    → Tester le bon fonctionnement du hotrefresh (Sur les 3 serveurs), compris le refraichissement effectué du browser, et lancer ces tests au start.bat → BIG message si pb
+    * ///2fix **URGENT** → Tester le bon fonctionnement du hotrefresh (Sur les 3 serveurs), compris le refraichissement effectué du browser, et lancer ces tests au start.bat → BIG message si pb
 
 5. //2do Base de Données
+
     Ajouter PostgreSQL pour :
-    Persister les données
-    Gérer les sessions utilisateurs
-    Cache
+    * Persister les données
+    * Gérer les sessions utilisateurs
+    * Cache
 
 6. //2do Monitoring & Logging
     Actuellement : Aucun logging structuré
     À ajouter :
-    Logging avec niveaux (INFO, ERROR, DEBUG)
-    Monitoring des WebSockets actifs
-    Métriques de performance
+    * Logging avec niveaux (INFO, ERROR, DEBUG)
+    * Monitoring des WebSockets actifs
+    * Métriques de performance
 
 7. //2do CI/CD
+
     GitHub Actions pour :
-    Linter le code automatiquement
-    Exécuter les tests
-    Builder les images Docker
-    Déployer automatiquement
+
+    * Linter le code automatiquement
+    * Exécuter les tests
+    * Builder les images Docker
+    * Déployer automatiquement
 
 8. //2do Documentation API
+
     FastAPI génère automatiquement une doc, mais :
-    Ajouter des descriptions détaillées aux endpoints
+    * Ajouter des descriptions détaillées aux endpoints
     Créer des exemples d'utilisation
-    Documenter les schémas WebSocket
+    * Documenter les schémas WebSocket
 
 9. //2do Performance Frontend
+
     Optimisations possibles :
-    Code splitting (lazy loading des composants)
-    Mise en cache des requêtes
-    Debounce sur les événements fréquents
+    * Code splitting (lazy loading des composants)
+    * Mise en cache des requêtes
+    * Debounce sur les événements fréquents
   Service Worker pour le mode offline
 
 10. //2do Authentification & Autorisation
-    Actuellement : Aucune sécurité
+
+    Actuellement : Aucune sécurité (En cours)
 
 //2do À ajouter :
-JWT tokens
-Sessions utilisateurs
-Rôles et permissions
-OAuth2 (Google, GitHub)
+
+* JWT tokens (En cours)
+* Sessions utilisateurs
+* Rôles et permissions
+* OAuth2 (Google, GitHub)
+* CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
