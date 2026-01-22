@@ -213,6 +213,50 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 
 ---
 
+## Tests automatisés
+
+### Health Checks
+
+Le script [start.bat](start.bat) exécute automatiquement des **health checks** après le démarrage des services :
+
+- ✅ Vérifie que FastAPI répond (port 8000)
+- ✅ Vérifie que Django répond (port 8001)
+- ✅ Vérifie que React/Vite répond (port 5173)
+- ⚡ Temps d'exécution : ~2-3 secondes
+- 🚨 Affiche un **BIG message d'alerte** si un service ne répond pas
+
+**Tester manuellement :**
+
+```bash
+# Health checks uniquement
+test-health.bat
+
+# Ou directement :
+python tests/test_health.py
+```
+
+### Hot-Reload Tests
+
+Teste que les modifications de code sont détectées et appliquées :
+
+- 🔥 FastAPI (détecte les redémarrages via server_id)
+- 🔥 Django (runserver --reload)
+- 🔥 React/Vite (HMR - Hot Module Replacement)
+
+**Tester manuellement :**
+
+```bash
+# Tests de hot-reload
+test-hotreload.bat
+
+# Ou directement :
+python tests/test_hotreload.py
+```
+
+**📖 Consultez [tests/README.md](tests/README.md) pour plus de détails**
+
+---
+
 ## Roadmap priorisée
 
 P0 (bloquant)
@@ -223,6 +267,12 @@ P0 (bloquant)
   * Secrets externalisés
   * Configuration par environnement
   * Voir [SECURITY.md](z_doc/SECURITY.md)
+
+* ✅ **Tests automatisés de santé**
+  * Health checks des 3 serveurs
+  * Tests de hot-reload
+  * Intégration dans start.bat
+  * Scripts dédiés (test-health.bat, test-hotreload.bat)
 
 * ❌ Auth JWT + RBAC
 * ❌ Reverse proxy + routing

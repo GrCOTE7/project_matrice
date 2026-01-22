@@ -21,11 +21,37 @@ start "Frontend - Vite" /min cmd /k "cd frontend & npm run dev"
 echo.
 echo ===================================================
 echo   Services lances en ARRIERE-PLAN (reduits).
-echo   - Backend : http://localhost:8000/api/hello
+echo   - Backend FastAPI: http://localhost:8000/api/hello
 echo   - Backend Django: http://localhost:8001/admin/
 echo   - Frontend: http://localhost:5173
-echo.
-echo   NOTE: Les fenetres sont reduites dans la barre des taches.
-echo         Fermez-les manuellement pour arreter les serveurs.
 echo ===================================================
+
+echo.
+echo [4/4] Attente du demarrage des services (10s)...
+timeout /t 10 /nobreak >nul
+
+echo.
+echo [*] Execution des Health Checks...
+call .venv\Scripts\activate
+python tests/test_health.py
+
+if errorlevel 1 (
+    echo.
+    echo ===================================================
+    echo.
+    echo   *** ALERTE: CERTAINS SERVICES NE REPONDENT PAS ***
+    echo.
+    echo   Verifiez les fenetres reduites dans la barre
+    echo   des taches pour voir les erreurs eventuelles.
+    echo.
+    echo ===================================================
+    pause
+) else (
+    echo.
+    echo ===================================================
+    echo   Tous les services sont operationnels!
+    echo   NOTE: Les fenetres sont reduites dans la barre des taches.
+    echo         Fermez-les manuellement pour arreter les serveurs.
+    echo ===================================================
+)
 @REM pause

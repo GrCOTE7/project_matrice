@@ -112,24 +112,97 @@ sequenceDiagram
 
 ---
 
-## Implémentation progressive
+## Roadmap d'implémentation (JWT + RBAC)
 
-Vous pouvez commencer par **JWT simple**, puis ajouter **RBAC** plus tard si nécessaire :
+Pour votre projet **React + FastAPI + Django**, voici les **3 étapes de mise en place progressive** pour implémenter JWT + RBAC sans tout faire d'un coup :
 
-### Phase 1 : JWT basique
+### Phase 1 : JWT basique (Foundation)
 
-- Authentification utilisateur
-- Token avec ID utilisateur uniquement
-- Tous les utilisateurs authentifiés = mêmes droits
+**Objectif** : //2do Mettre en place l'infrastructure d'authentification
 
-### Phase 2 : Ajout RBAC
+#### Backend Django - Authentification JWT
 
-- Rôles (Admin, Manager, User)
-- Permissions encodées dans le JWT
-- Contrôles d'accès dans FastAPI et Django
+- ✅ //2do Modèle User Django
+- ✅ //2do Endpoint `/auth/login` qui génère un JWT
+- ✅ //2do Endpoint `/auth/refresh` pour renouveler le token
+- ✅ //2do JWT contient : `user_id`, `username`, `exp`
 
-### Phase 3 : RBAC avancé
+#### Backend FastAPI - Validation des tokens
 
-- Permissions granulaires par ressource
-- Rôles dynamiques configurables
-- Audit des accès
+- ✅ //2do Middleware de validation JWT
+- ✅ //2do Extraction du `user_id` depuis le token
+- ✅ //2do Tous les endpoints authentifiés (pas encore de distinction de rôles)
+
+#### Frontend React - Interface de connexion
+
+- ✅ //2do Page de login
+- ✅ //2do Stockage du token (localStorage/cookies)
+- ✅ //2do Envoi du token dans les headers (`Authorization: Bearer`)
+- ✅ //2do Gestion du refresh automatique
+
+**Livrable** : //2do Application avec login fonctionnel, mais tous les utilisateurs ont les mêmes droits.
+
+---
+
+### Phase 2 : Ajout RBAC (Core Business Logic)
+
+**Objectif** : //2do Différencier les utilisateurs par rôles
+
+#### Backend Django - Gestion des rôles
+
+- ✅ //2do Ajout du champ `role` au modèle User (Admin/Manager/User)
+- ✅ //2do Modification du JWT pour inclure `role` et `permissions`
+- ✅ //2do Endpoints d'administration des rôles (optionnel)
+
+#### Backend FastAPI - Contrôle d'accès par rôle
+
+- ✅ //2do Décorateurs de vérification de rôles (`@require_role("admin")`)
+- ✅ //2do Protection des endpoints critiques par rôle
+- ✅ //2do Messages d'erreur 403 Forbidden si rôle insuffisant
+
+#### Frontend React - Affichage selon les rôles
+
+- ✅ //2do Affichage conditionnel selon le rôle (menus, boutons)
+- ✅ //2do Routes protégées par rôle
+- ✅ //2do Gestion des erreurs 403
+
+**Livrable** : //2do Application avec 3 niveaux d'accès fonctionnels (Admin > Manager > User).
+
+---
+
+### Phase 3 : RBAC avancé (Polish & Scale)
+
+**Objectif** : //2do Affiner la sécurité et préparer l'évolution
+
+#### Backend Django - Permissions granulaires
+
+- ✅ //2do Permissions granulaires par ressource (ex: `can_edit_invoice`)
+- ✅ //2do Configuration dynamique des rôles en base de données
+- ✅ //2do Logs d'audit des accès sensibles
+- ✅ //2do Révocation de tokens (blacklist)
+
+#### Backend FastAPI - Contrôle d'accès avancé
+
+- ✅ //2do Décorateurs de permissions fines (`@require_permission("edit_invoice")`)
+- ✅ //2do Vérification par ressource (ex: user peut éditer SEULEMENT ses propres ressources)
+- ✅ R//2do ate limiting par rôle
+
+#### Frontend React - Administration des permissions
+
+- ✅ //2do UI d'administration des rôles/permissions
+- ✅ //2do Affichage des logs d'accès
+- ✅ //2do Notifications de révocation de token
+
+**Livrable** : //2do Système de permissions complet, auditable et évolutif.
+
+---
+
+### Recommandation
+
+**Pour votre projet actuel :**
+
+1. //2do Commencez par **Phase 1** (1-2 jours) pour valider l'architecture
+2. //2do Passez rapidement à **Phase 2** (2-3 jours) car c'est le cœur de vos besoins
+3. //2do **Phase 3** Permissions granulaires
+
+💡 **L'avantage de cette approche** : Application fonctionnelle à chaque étape, tout en construisant progressivement un système robuste.
