@@ -229,11 +229,11 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 
 Le script [start.bat](start.bat) exécute automatiquement des **health checks** après le démarrage des services :
 
-- ✅ Vérifie que FastAPI répond (port 8000)
-- ✅ Vérifie que Django répond (port 8001)
-- ✅ Vérifie que React/Vite répond (port 5173)
-- ⚡ Temps d'exécution : ~2-3 secondes
-- 🚨 Affiche un **BIG message d'alerte** si un service ne répond pas
+* ✅ Vérifie que FastAPI répond (port 8000)
+* ✅ Vérifie que Django répond (port 8001)
+* ✅ Vérifie que React/Vite répond (port 5173)
+* ⚡ Temps d'exécution : ~2-3 secondes
+* 🚨 Affiche un **BIG message d'alerte** si un service ne répond pas
 
 **Tester manuellement :**
 
@@ -249,9 +249,9 @@ python tests/test_health.py
 
 Teste que les modifications de code sont détectées et appliquées :
 
-- 🔥 FastAPI (détecte les redémarrages via server_id)
-- 🔥 Django (runserver --reload)
-- 🔥 React/Vite (HMR - Hot Module Replacement)
+* 🔥 FastAPI (détecte les redémarrages via server_id)
+* 🔥 Django (runserver --reload)
+* 🔥 React/Vite (HMR - Hot Module Replacement)
 
 **Tester manuellement :**
 
@@ -272,7 +272,7 @@ python tests/test_hotreload.py
 P0 (bloquant)
 
 * ✅ **Sécurité & configuration (.env, CORS, secrets)**
-  *  Fichiers .env pour tous les services
+  * Fichiers .env pour tous les services
   * CORS configuré (FastAPI + Django)
   * Secrets externalisés
   * Configuration par environnement
@@ -284,18 +284,18 @@ P0 (bloquant)
   * Intégration dans start.bat
   * Scripts dédiés (test-health.bat, test-hotreload.bat)
 
-* ❌ //2do Auth JWT + RBAC
-* ❌ //2do Reverse proxy + routing
+❌ Auth JWT + RBAC
+✅ Reverse proxy + routing (Vite proxy en dev, Nginx en prod)
 
 P1 (pro)
-* ❌ //2do Tests (pytest, Vitest, Playwright)
-* ❌ //2do CI/CD (lint, tests, build, push image)
-* ❌ //2do Logging structuré + metrics
+❌ //2do Tests unitaires/E2E (pytest, Vitest, Playwright)
+❌ //2do CI/CD (lint, tests, build, push image)
+❌ //2do Logging structuré + metrics
 
 P2 (scale)
-* ❌ //2do Cache/DB (PostgreSQL/Redis)
-* ❌ //2do Observabilité (traces, dashboards)
-* ❌ //2do Versioning API + doc enrichie
+❌ //2do Cache/DB (PostgreSQL/Redis)
+❌ //2do Observabilité (traces, dashboards)
+❌ //2do Versioning API + doc enrichie
 
 ---
 
@@ -313,79 +313,76 @@ Vérifier chaque point et qu'elles sont atteintes (sous autre forme peut-être) 
 
 🎯 Améliorations Prioritaires :
 
-1. //2do Sécurité & Configuration
+1. ✅ Sécurité & Configuration (.env, CORS)
 
-    CORS correctement configuré, mais aActuellement manquant dans FastAPI :
-    * Rate limiting
-    * Protéger vos endpoints contre les abus.
+    Restant à faire côté FastAPI :
+    ❌ Rate limiting
+    ❌ Protection anti‑abus (ex: quotas, IP throttling)
 
-2. //2do Structure Backend Modulaire
+2. Structure Backend M'odulaire
 
-    État actuel : Tout dans main.py
-    Problème : Difficile à maintenir quand le projet grandit
-    * Structure à revoir
+    État actuel : majoritairement dans main.py
+    Problème : difficile à maintenir quand le projet grandit
+    ❌ Structure à modulariser (routers/services/etc.)
 
-3. //2do Gestion d'Erreurs Frontend
+3. Gestion d'Erreurs Frontend
 
     Problèmes actuels :
     * Pas de gestion d'erreur pour les fetch
     * Pas de retry automatique
     * Pas de feedback utilisateur en cas d'échec
 
-4. //2do Tests Automatisés
+4. ✅ Tests Automatisés (santé + hot‑reload)
 
-    Actuellement manquants, ce qui rend les modifications risquées. À ajouter :
-    * Tests unitaires backend (pytest)
-    * Tests unitaires frontend (Vitest)
-    Tests E2E (Playwright)
-    * ///2fix **URGENT** → Tester le bon fonctionnement du hotrefresh (Sur les 3 serveurs), compris le refraichissement effectué du browser, et lancer ces tests au start.bat → BIG message si pb
+    Restant à faire :
+    ❌ Gestion Tests unitaires backend (pytest)
+    ❌ Tests unitaires frontend (Vitest)
+    ❌ Tests E2E (Playwright)
 
-5. //2do Base de Données
+5. Base de Données
 
     Ajouter PostgreSQL pour :
-    * Persister les données
-    * Gérer les sessions utilisateurs
-    * Cache
+    ❌ Persister les données
+    ❌ Gérer les sessions utilisateurs
+    ❌ Cache
 
-6. //2do Monitoring & Logging
-    Actuellement : Aucun logging structuré
-    À ajouter :
-    * Logging avec niveaux (INFO, ERROR, DEBUG)
-    * Monitoring des WebSockets actifs
-    * Métriques de performance
+6. Monitoring & Logging (partiel)
 
-7. //2do CI/CD
+    ✅ Logging basique côté FastAPI
+    Restant à faire :
+    ❌ //2do Logging structuré (JSON)
+    ❌ //2do Monitoring des WebSockets actifs
+    ❌ //2do Métriques de performance
+
+7. CI/CD
 
     GitHub Actions pour :
 
-    * Linter le code automatiquement
-    * Exécuter les tests
-    * Builder les images Docker
-    * Déployer automatiquement
-
-8. //2do Documentation API
+    ❌ Linter le code automatiquement
+    ❌ Exécuter les tests
+    ❌ Builder les images Docker
+    ❌ Déployer automatiquement
+8. Documentation API
 
     FastAPI génère automatiquement une doc, mais :
-    * Ajouter des descriptions détaillées aux endpoints
-    Créer des exemples d'utilisation
-    * Documenter les schémas WebSocket
+    ❌ Ajouter des descriptions détaillées aux endpoints
+    ❌ Créer des exemples d'utilisation
+    ❌ Documenter les schémas WebSocket
 
-9. //2do Performance Frontend
+9. Performance Frontend
 
     Optimisations possibles :
-    * Code splitting (lazy loading des composants)
-    * Mise en cache des requêtes
-    * Debounce sur les événements fréquents
-  Service Worker pour le mode offline
+    ❌ Code splitting (lazy loading des composants)
+    ❌ Mise en cache des requêtes
+    ❌ Debounce sur les événements fréquents
+    ❌ Service Worker pour le mode offline
 
-10. //2do Authentification & Autorisation
+10. Authentification & Autorisation
 
-    Actuellement : Aucune sécurité (En cours)
+    À ajouter :
 
-//2do À ajouter :
-
-* JWT tokens (En cours)
-* Sessions utilisateurs
-* Rôles et permissions
-* OAuth2 (Google, GitHub)
-* CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
+    ❌ JWT tokens
+    ❌ Sessions utilisateurs
+    ❌ Rôles et permissions
+    ❌ OAuth2 (Google, GitHub)
+    ❌ CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
