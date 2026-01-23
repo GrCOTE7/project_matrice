@@ -284,18 +284,18 @@ P0 (bloquant)
   * Intégration dans start.bat
   * Scripts dédiés (test-health.bat, test-hotreload.bat)
 
-* ❌ Auth JWT + RBAC
-* ❌ Reverse proxy + routing
+* ❌ //2do Auth JWT + RBAC
+* ❌ //2do Reverse proxy + routing
 
 P1 (pro)
-* ❌ Tests (pytest, Vitest, Playwright)
-* ❌ CI/CD (lint, tests, build, push image)
-* ❌ Logging structuré + metrics
+* ❌ //2do Tests (pytest, Vitest, Playwright)
+* ❌ //2do CI/CD (lint, tests, build, push image)
+* ❌ //2do Logging structuré + metrics
 
 P2 (scale)
-* ❌ Cache/DB (PostgreSQL/Redis)
-* ❌ Observabilité (traces, dashboards)
-* ❌ Versioning API + doc enrichie
+* ❌ //2do Cache/DB (PostgreSQL/Redis)
+* ❌ //2do Observabilité (traces, dashboards)
+* ❌ //2do Versioning API + doc enrichie
 
 ---
 
