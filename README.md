@@ -288,11 +288,13 @@ P0 (bloquant)
 ✅ Reverse proxy + routing (Vite proxy en dev, Nginx en prod)
 
 P1 (pro)
-❌ //2do Tests unitaires/E2E (pytest, Vitest, Playwright)
-❌ //2do CI/CD (lint, tests, build, push image)
-❌ //2do Logging structuré + metrics
 
+    ❌ Tests unitaires/E2E (pytest, Vitest, Playwright)
+    ❌ CI/CD (lint, tests, build, push image)
+    ❌ //2do Logging structuré + metrics
+    
 P2 (scale)
+
 ❌ //2do Cache/DB (PostgreSQL/Redis)
 ❌ //2do Observabilité (traces, dashboards)
 ❌ //2do Versioning API + doc enrichie
@@ -386,3 +388,5 @@ Vérifier chaque point et qu'elles sont atteintes (sous autre forme peut-être) 
     ❌ Rôles et permissions
     ❌ OAuth2 (Google, GitHub)
     ❌ CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
+
+//2see Vérifications & contrôle général

@@ -130,7 +130,3 @@ pip install requests
 2. Vérifier les fenêtres réduites dans la barre des tâches
 3. Exécuter `./test-health.bat` pour diagnostiquer
 4. Consulter [tests/README.md](tests/README.md) pour plus de détails
-
----
-
-**C'est exactement ce que tu faisais manuellement, maintenant automatisé ! 🎉**
