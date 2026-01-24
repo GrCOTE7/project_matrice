@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useBackendStatus } from "./context/BackendContext";
+import { authFetch } from "./auth";
 
 const HelloWorld = () => {
   const [message, setMessage] = useState("");
   const { isConnected } = useBackendStatus();
 
   useEffect(() => {
-    fetch("/api/hello")
+    authFetch("/api/hello")
       .then((res) => res.json())
-      .then((data) => setMessage(data.message))
+      .then((data) => setMessage(data.message || data.detail || ""))
       .catch((err) => console.error(err));
   }, []);
 
   // Seuil de caractères pour basculer en affichage sur deux lignes
   const CHAR_LIMIT = 20;
-  const isLong = message.length > CHAR_LIMIT;
+  const isLong = (message || "").length > CHAR_LIMIT;
   // Dynamique : div si long (bloc), p/span si court (inline)
   const Wrapper = isLong ? "div" : "p";
   const Label = isLong ? "div" : "span";
@@ -29,8 +30,8 @@ const HelloWorld = () => {
         <span
           className={`font-semibold transition-all duration-500 ${
             isConnected
-            ? "text-gray-200 px-1"
-            : "bg-red-400/20 rounded-md text-blue-100 animate-pulse italic px-1"
+              ? "text-gray-200 px-1"
+              : "bg-red-400/20 rounded-md text-blue-100 animate-pulse italic px-1"
           }`}
         >
           {message}

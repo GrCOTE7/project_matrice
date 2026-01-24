@@ -8,6 +8,7 @@ admin.site.site_header = "Project Matrice Admin (DEV)"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("auth/", include("apps.auth_api.urls")),
 ]
 
 if settings.DEBUG:

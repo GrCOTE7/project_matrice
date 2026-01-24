@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 // En local, on garde "localhost".
 // Note: Vite utilise cette URL pour le proxy côté serveur (dans le conteneur)
 const BACKEND_URL = process.env.VITE_BACKEND_URL || "http://localhost:8000";
+const DJANGO_URL = process.env.VITE_DJANGO_URL || "http://localhost:8001";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -18,6 +19,10 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: BACKEND_URL,
+        changeOrigin: true,
+      },
+      "/auth": {
+        target: DJANGO_URL,
         changeOrigin: true,
       },
       "/ws": {

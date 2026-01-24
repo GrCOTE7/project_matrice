@@ -1,8 +1,10 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 import asyncio
 import uuid
 import logging
+import jwt
 from .config import settings
 
 # Configuration du logging
@@ -18,6 +20,37 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/docs" if settings.is_dev else None,  # Docs uniquement en dev
 )
+
+
+@app.middleware("http")
+async def jwt_middleware(request: Request, call_next):
+    path = request.url.path
+
+    if not path.startswith("/api") or path.startswith("/api/health"):
+        return await call_next(request)
+
+    auth_header = request.headers.get("Authorization", "")
+    if not auth_header.startswith("Bearer "):
+        return JSONResponse({"detail": "Missing Bearer token"}, status_code=401)
+
+    token = auth_header.replace("Bearer ", "", 1).strip()
+    try:
+        payload = jwt.decode(
+            token,
+            settings.JWT_SECRET,
+            algorithms=[settings.JWT_ALGORITHM],
+            issuer=settings.JWT_ISSUER,
+        )
+    except jwt.ExpiredSignatureError:
+        return JSONResponse({"detail": "Token expired"}, status_code=401)
+    except jwt.InvalidTokenError:
+        return JSONResponse({"detail": "Invalid token"}, status_code=401)
+
+    if payload.get("type") != "access":
+        return JSONResponse({"detail": "Invalid token type"}, status_code=401)
+
+    request.state.user = payload
+    return await call_next(request)
 
 # Configuration CORS
 app.add_middleware(
@@ -37,8 +70,14 @@ active_connections: list[WebSocket] = []
 
 
 @app.get("/api/hello")
-def hello():
-    return {"message": "Hello from FastAPI!", "environment": settings.ENV}
+def hello(request: Request):
+    user = getattr(request.state, "user", {})
+    return {
+        "message": "Hello from FastAPI!",
+        "environment": settings.ENV,
+        "user_id": user.get("user_id"),
+        "username": user.get("username"),
+    }
 
 
 @app.get("/api/health")

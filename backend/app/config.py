@@ -27,6 +27,11 @@ class Settings:
     # Logging
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
+    # JWT
+    JWT_SECRET: str = os.getenv("JWT_SECRET", "change-me")
+    JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM", "HS256")
+    JWT_ISSUER: str = os.getenv("JWT_ISSUER", "project_matrice")
+
     @property
     def is_dev(self) -> bool:
         """Vérifie si on est en mode développement."""

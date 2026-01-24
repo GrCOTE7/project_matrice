@@ -26,10 +26,10 @@ echo ----------------------------------------
 echo Installation des dependances FastAPI...
 echo ----------------------------------------
 if exist .venv (
-    echo Environnement virtuel detecte (racine)
+    echo Environnement virtuel detecte - racine
     call .venv\Scripts\activate
 ) else (
-    echo Creation de l'environnement virtuel (racine)...
+    echo Creation de l'environnement virtuel - racine...
     python -m venv .venv
     call .venv\Scripts\activate
 )

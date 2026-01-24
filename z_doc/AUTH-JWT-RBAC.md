@@ -118,29 +118,29 @@ Pour votre projet **React + FastAPI + Django**, voici les **3 étapes de mise en
 
 ### Phase 1 : JWT basique (Foundation)
 
-**Objectif** : //2do Mettre en place l'infrastructure d'authentification
+**Objectif** : Mettre en place l'infrastructure d'authentification JWT (login + refresh + validation côté FastAPI + intégration front).
 
 #### Backend Django - Authentification JWT
 
-- ✅ //2do Modèle User Django
-- ✅ //2do Endpoint `/auth/login` qui génère un JWT
-- ✅ //2do Endpoint `/auth/refresh` pour renouveler le token
-- ✅ //2do JWT contient : `user_id`, `username`, `exp`
+- ✅ Modèle User Django
+- ✅ Endpoint `/auth/login` qui génère un JWT
+- ✅ Endpoint `/auth/refresh` pour renouveler le token
+- ✅ JWT contient : `user_id`, `username`, `exp`
 
 #### Backend FastAPI - Validation des tokens
 
-- ✅ //2do Middleware de validation JWT
-- ✅ //2do Extraction du `user_id` depuis le token
-- ✅ //2do Tous les endpoints authentifiés (pas encore de distinction de rôles)
+- ✅ Middleware de validation JWT
+- ✅ Extraction du `user_id` depuis le token
+- ✅ Tous les endpoints authentifiés (pas encore de distinction de rôles)
 
 #### Frontend React - Interface de connexion
 
-- ✅ //2do Page de login
-- ✅ //2do Stockage du token (localStorage/cookies)
-- ✅ //2do Envoi du token dans les headers (`Authorization: Bearer`)
-- ✅ //2do Gestion du refresh automatique
+- ✅ Page de login
+- ✅ Stockage du token (localStorage/cookies)
+- ✅ Envoi du token dans les headers (`Authorization: Bearer`)
+- ✅ Gestion du refresh automatique
 
-**Livrable** : //2do Application avec login fonctionnel, mais tous les utilisateurs ont les mêmes droits.
+**Livrable** : Application avec login fonctionnel, mais tous les utilisateurs ont les mêmes droits.
 
 ---
 
