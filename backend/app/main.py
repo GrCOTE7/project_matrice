@@ -1,6 +1,18 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
+from fastapi import (
+    FastAPI,
+    WebSocket,
+    WebSocketDisconnect,
+    Request,
+    Depends,
+    HTTPException,
+    status,
+)
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
+from slowapi.middleware import SlowAPIMiddleware
 import asyncio
 import uuid
 import logging
@@ -22,6 +34,14 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/docs" if settings.is_dev else None,  # Docs uniquement en dev
 )
+
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=[settings.RATE_LIMIT_DEFAULT],
+)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)
 
 
 @app.middleware("http")
@@ -54,6 +74,7 @@ async def jwt_middleware(request: Request, call_next):
     request.state.user = payload
     return await call_next(request)
 
+
 # Configuration CORS
 app.add_middleware(
     CORSMiddleware,
@@ -72,6 +93,7 @@ active_connections: list[WebSocket] = []
 
 
 @app.get("/api/hello")
+@limiter.limit(settings.RATE_LIMIT_HELLO)
 def hello(request: Request):
     user = getattr(request.state, "user", {})
     return {
@@ -82,8 +104,55 @@ def hello(request: Request):
     }
 
 
+def require_roles(*required_roles: str):
+    def _check(request: Request):
+        user = getattr(request.state, "user", {})
+        roles = set(user.get("roles") or [])
+        if user.get("is_superuser"):
+            return
+        if not roles.intersection(required_roles):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Insufficient role",
+            )
+
+    return _check
+
+
+def require_permissions(*required_permissions: str):
+    def _check(request: Request):
+        user = getattr(request.state, "user", {})
+        permissions = set(user.get("permissions") or [])
+        if user.get("is_superuser"):
+            return
+        if not permissions.issuperset(required_permissions):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Insufficient permissions",
+            )
+
+    return _check
+
+
+@app.get("/api/admin/hello")
+@limiter.limit(settings.RATE_LIMIT_HELLO)
+def admin_hello(
+    request: Request,
+    _rbac: None = Depends(require_roles("admin")),
+):
+    user = getattr(request.state, "user", {})
+    return {
+        "message": "Hello from admin",
+        "environment": settings.ENV,
+        "user_id": user.get("user_id"),
+        "username": user.get("username"),
+        "roles": user.get("roles"),
+    }
+
+
 @app.get("/api/health")
-def health_check():
+@limiter.limit(settings.RATE_LIMIT_HEALTH)
+def health_check(request: Request):
     """Endpoint de santé pour monitoring."""
     return {"status": "healthy", "environment": settings.ENV, "server_id": server_id}
 

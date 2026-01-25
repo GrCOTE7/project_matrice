@@ -22,6 +22,14 @@ if errorlevel 1 (
     exit /b 1
 )
 
+"%~dp0.venv\Scripts\python.exe" -c "import slowapi" >nul 2>&1
+if errorlevel 1 (
+    echo.
+    echo [ERREUR] Dépendances manquantes - SlowAPI.
+    echo Lancez setup.bat pour installer les requirements.
+    exit /b 1
+)
+
 echo.
 echo [1/4] Nettoyage des services existants...
 call stop.bat

@@ -310,6 +310,7 @@ python tests/test_hotreload.py
     * CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
 
 17) ❌ Vérifications & contrôles global
+    * Vérifier la récupération d’IP réelle derrière proxy (rate limiting par IP)
 
 ---
 

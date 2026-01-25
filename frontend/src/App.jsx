@@ -30,9 +30,18 @@ function App() {
     if (!isAuthenticated) return;
 
     authFetch("/api/hello")
-      .then((res) => res.json())
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(data.detail || "Unauthorized");
+        }
+        return data;
+      })
       .then((data) => setMessage(data.message))
-      .catch(() => setMessage("Unauthorized"));
+      .catch((err) => {
+        const raw = (err?.message || "Unauthorized").trim();
+        setMessage(raw || "Unauthorized");
+      });
   }, [isAuthenticated]);
 
   const handleLogin = async (event) => {

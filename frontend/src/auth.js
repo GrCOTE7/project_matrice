@@ -89,7 +89,12 @@ export const authFetch = async (input, init = {}) => {
   const tokens = getTokens();
 
   if (!tokens.accessToken || isTokenExpired(tokens.accessToken)) {
-    await refreshAccessToken();
+    try {
+      await refreshAccessToken();
+    } catch (err) {
+      clearTokens();
+      throw err;
+    }
   }
 
   const { accessToken } = getTokens();
@@ -99,10 +104,20 @@ export const authFetch = async (input, init = {}) => {
   const response = await fetch(input, { ...init, headers });
   if (response.status !== 401) return response;
 
-  await refreshAccessToken();
+  try {
+    await refreshAccessToken();
+  } catch (err) {
+    clearTokens();
+    throw err;
+  }
   const retryHeaders = new Headers(init.headers || {});
   retryHeaders.set("Authorization", `Bearer ${getTokens().accessToken}`);
-  return fetch(input, { ...init, headers: retryHeaders });
+  const retryResponse = await fetch(input, { ...init, headers: retryHeaders });
+  if (retryResponse.status === 401) {
+    clearTokens();
+    throw new Error("Session expirée");
+  }
+  return retryResponse;
 };
 
 export const hasValidSession = () => {

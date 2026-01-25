@@ -8,10 +8,21 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 
+def _get_user_roles(user):
+    return list(user.groups.values_list("name", flat=True))
+
+
+def _get_user_permissions(user):
+    return list(user.get_all_permissions())
+
+
 def _build_tokens(user):
     now = datetime.now(timezone.utc)
     access_exp = now + timedelta(minutes=settings.JWT_ACCESS_TTL_MINUTES)
     refresh_exp = now + timedelta(days=settings.JWT_REFRESH_TTL_DAYS)
+
+    roles = _get_user_roles(user)
+    permissions = _get_user_permissions(user)
 
     access_payload = {
         "user_id": user.id,
@@ -20,6 +31,10 @@ def _build_tokens(user):
         "iat": now,
         "exp": access_exp,
         "iss": settings.JWT_ISSUER,
+        "roles": roles,
+        "permissions": permissions,
+        "is_staff": user.is_staff,
+        "is_superuser": user.is_superuser,
     }
 
     refresh_payload = {
@@ -29,6 +44,10 @@ def _build_tokens(user):
         "iat": now,
         "exp": refresh_exp,
         "iss": settings.JWT_ISSUER,
+        "roles": roles,
+        "permissions": permissions,
+        "is_staff": user.is_staff,
+        "is_superuser": user.is_superuser,
     }
 
     access_token = jwt.encode(

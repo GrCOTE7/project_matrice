@@ -32,6 +32,11 @@ class Settings:
     JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM", "HS256")
     JWT_ISSUER: str = os.getenv("JWT_ISSUER", "project_matrice")
 
+    # Rate limiting (SlowAPI)
+    RATE_LIMIT_DEFAULT: str = os.getenv("FASTAPI_RATE_LIMIT_DEFAULT", "60/minute")
+    RATE_LIMIT_HEALTH: str = os.getenv("FASTAPI_RATE_LIMIT_HEALTH", "120/minute")
+    RATE_LIMIT_HELLO: str = os.getenv("FASTAPI_RATE_LIMIT_HELLO", "30/minute")
+
     @property
     def is_dev(self) -> bool:
         """Vérifie si on est en mode développement."""
