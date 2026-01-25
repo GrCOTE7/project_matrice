@@ -111,7 +111,9 @@ flowchart LR
     DJ <-->|REST/GraphQL| FA
 ```
 
-FastAPI (services critiques) :
+### Structures
+
+#### FastAPI (services critiques)
 
 ```php
 backend/
@@ -131,7 +133,7 @@ backend/
 │       └── __init__.py
 ```
 
-Django (core back‑office/auth) :
+#### Django (core back‑office/auth)
 
 ```php
 backend/
@@ -152,7 +154,7 @@ backend/
 │   └── requirements.txt
 ```
 
-React (frontend) :
+#### React (frontend)
 
 ```php
 frontend
@@ -294,8 +296,6 @@ python tests/test_hotreload.py
 
 7) ❌ **Gestion d’erreurs frontend globale** (fetch + feedback utilisateur)
 
-### P1 (pro)
-
 8) ❌ **Tests unitaires/E2E** (pytest, Vitest, Playwright)
 
 9) ❌ **CI/CD** (lint, tests, build, push image, déploiement)
@@ -304,15 +304,11 @@ python tests/test_hotreload.py
 
 11) ❌ **Documentation API enrichie** (descriptions, exemples, schémas WS)
 
-### P2 (scale)
-
 12) ❌ **Base de données** (PostgreSQL/Redis) : persistance, sessions, cache
 
 13) ❌ **Observabilité** (traces, dashboards)
 
 14) ❌ **Versioning API + doc enrichie**
-
-### P3 (qualité)
 
 15) ❌ **Performance frontend**
     * Code splitting (lazy loading des composants)
@@ -324,8 +320,6 @@ python tests/test_hotreload.py
     * Sessions utilisateurs
     * OAuth2 (Google, GitHub)
     * CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
-
-### P4 (contrôle)
 
 17) ❌ Vérifications & contrôles global
 
