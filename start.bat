@@ -68,12 +68,12 @@ echo [4/4] Lancement du Frontend (Vite)...
 start "Frontend - Vite" /min cmd /c "cd frontend & npm run dev"
 
 echo.
-echo ===================================================
-echo   Services lances en ARRIERE-PLAN (reduits).
-echo   - Backend FastAPI: http://localhost:8000/api/hello
-echo   - Backend Django: http://localhost:8001/admin/
-echo   - Frontend: http://localhost:5173
-echo ===================================================
+    echo ================================================
+    echo   Services lances en ARRIERE-PLAN (reduits).
+    echo   - Backend FastAPI: http://localhost:8000/api/hello
+    echo   - Backend Django: http://localhost:8001/admin/
+    echo   - Frontend: http://localhost:5173
+    echo ================================================
 
 echo.
 echo [5/5] Attente du demarrage des services (7")...
@@ -88,19 +88,19 @@ if errorlevel 1 (
     echo.
     echo ===================================================
     echo.
-    echo   *** ALERTE: CERTAINS SERVICES NE REPONDENT PAS ***
+    echo   *** ALERTE: CERTAINS SERVICES NE RÉPONDENT PAS ***
     echo.
-    echo   Verifiez les fenetres reduites dans la barre
-    echo   des taches pour voir les erreurs eventuelles.
+    echo     Vérifiez les fenêtres réduites dans la barre
+    echo     des tâches pour voir les erreurs éventuelles.
     echo.
     echo ===================================================
     timeout /t 10 /nobreak >nul
 ) else (
     echo.
-    echo ===================================================
-    echo   Tous les services sont operationnels!
-    echo   NOTE: Les fenetres sont reduites dans la barre des taches.
-    echo         Fermez-les manuellement pour arreter les serveurs.
-    echo ===================================================
+    echo ============================================================
+    echo   Tous les SERVICES sont OPÉRATIONNELS!
+    echo   NOTE: Les fenêtres sont réduites dans la barre des tâches.
+    echo         Fermez-les manuellement pour arrêter les serveurs.
+    echo ============================================================
 )
 @REM pause
