@@ -276,13 +276,13 @@ python tests/test_hotreload.py
 
 3) ✅ **Reverse proxy + routing** (Vite proxy en dev, Nginx en prod)
 
-4) ✅ **Authentification JWT** (login/refresh + middleware) / ❌ **RBAC**
+4) ✅ **Authentification JWT** (login/refresh + middleware) / ✅ **RBAC (base)**
 
-5) ❌ **Rate limiting & protection anti‑abus** (quotas, IP throttling)
+5) ✅ **Rate limiting & protection anti‑abus** (quotas, IP throttling)
 
 6) ❌ **Structure FastAPI modulaire** (routers/services/etc.)
 
-7) ❌ **Gestion d’erreurs frontend globale** (fetch + feedback utilisateur)
+7) ✅ **Gestion d’erreurs frontend globale (base)** (fetch + feedback utilisateur)
 
 8) ❌ **Tests unitaires/E2E** (pytest, Vitest, Playwright)
 
