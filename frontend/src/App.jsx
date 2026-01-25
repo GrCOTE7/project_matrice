@@ -60,7 +60,7 @@ function App() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-50 text-slate-800 font-[Roboto]">
-      <div className="border min-w-100 max-w-4xl w-3/6 mx-auto p-8 text-center bg-white rounded-2xl shadow-sm">
+      <div className="border min-w-123 max-w-4xl w-3/6 mx-auto p-8 text-center bg-white rounded-2xl shadow-sm">
         <h1 className="text-4xl mx-8 font-bold mb-4 text-blue-600">
           Frontend Matrice (React)
         </h1>
