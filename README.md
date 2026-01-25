@@ -284,15 +284,15 @@ P0 (bloquant)
   * Intégration dans start.bat
   * Scripts dédiés (test-health.bat, test-hotreload.bat)
 
-❌ Auth JWT + RBAC
+✅ Auth JWT (login/refresh + middleware) / ❌ RBAC
 ✅ Reverse proxy + routing (Vite proxy en dev, Nginx en prod)
 
 P1 (pro)
 
-    ❌ Tests unitaires/E2E (pytest, Vitest, Playwright)
-    ❌ CI/CD (lint, tests, build, push image)
-    ❌ //2do Logging structuré + metrics
-    
+❌ Tests unitaires/E2E (pytest, Vitest, Playwright)
+❌ CI/CD (lint, tests, build, push image)
+❌ //2do Logging structuré + metrics
+
 P2 (scale)
 
 ❌ //2do Cache/DB (PostgreSQL/Redis)
@@ -329,10 +329,11 @@ Vérifier chaque point et qu'elles sont atteintes (sous autre forme peut-être) 
 
 3. Gestion d'Erreurs Frontend
 
-    Problèmes actuels :
-    * Pas de gestion d'erreur pour les fetch
-    * Pas de retry automatique
-    * Pas de feedback utilisateur en cas d'échec
+    État actuel (partiel) :
+    * ✅ Erreurs explicites sur login/refresh
+    * ✅ Retry automatique sur 401 (refresh + retry)
+    * ❌ Pas de gestion d'erreur globale pour tous les fetch
+    * ❌ Pas de feedback utilisateur centralisé en cas d'échec
 
 4. ✅ Tests Automatisés (santé + hot‑reload)
 
@@ -381,11 +382,11 @@ Vérifier chaque point et qu'elles sont atteintes (sous autre forme peut-être) 
 
 10. Authentification & Autorisation
 
-    À ajouter :
+    État actuel :
 
-    ❌ JWT tokens
+    ✅ JWT tokens (login/refresh + middleware FastAPI)
     ❌ Sessions utilisateurs
-    ❌ Rôles et permissions
+    ❌ Rôles et permissions (RBAC)
     ❌ OAuth2 (Google, GitHub)
     ❌ CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
 
