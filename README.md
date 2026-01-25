@@ -267,37 +267,67 @@ python tests/test_hotreload.py
 
 ---
 
-## Roadmap priorisée
+## Roadmap priorisée (fil directeur unique)
 
-P0 (bloquant)
+### P0 (bloquant)
 
-* ✅ **Sécurité & configuration (.env, CORS, secrets)**
-  * Fichiers .env pour tous les services
-  * CORS configuré (FastAPI + Django)
-  * Secrets externalisés
-  * Configuration par environnement
-  * Voir [SECURITY.md](z_doc/SECURITY.md)
+1) ✅ **Sécurité & configuration (.env, CORS, secrets)**
+    * Fichiers .env pour tous les services
+    * CORS configuré (FastAPI + Django)
+    * Secrets externalisés
+    * Configuration par environnement
+    * Voir [SECURITY.md](z_doc/SECURITY.md)
 
-* ✅ **Tests automatisés de santé**
-  * Health checks des 3 serveurs
-  * Tests de hot-reload
-  * Intégration dans start.bat
-  * Scripts dédiés (test-health.bat, test-hotreload.bat)
+2) ✅ **Tests automatisés de santé**
+    * Health checks des 3 serveurs
+    * Tests de hot-reload
+    * Intégration dans start.bat
+    * Scripts dédiés (test-health.bat, test-hotreload.bat)
 
-✅ Auth JWT (login/refresh + middleware) / ❌ RBAC
-✅ Reverse proxy + routing (Vite proxy en dev, Nginx en prod)
+3) ✅ **Reverse proxy + routing** (Vite proxy en dev, Nginx en prod)
 
-P1 (pro)
+4) ✅ **Authentification JWT** (login/refresh + middleware) / ❌ **RBAC**
 
-❌ Tests unitaires/E2E (pytest, Vitest, Playwright)
-❌ CI/CD (lint, tests, build, push image)
-❌ //2do Logging structuré + metrics
+5) ❌ **Rate limiting & protection anti‑abus** (quotas, IP throttling)
 
-P2 (scale)
+6) ❌ **Structure FastAPI modulaire** (routers/services/etc.)
 
-❌ //2do Cache/DB (PostgreSQL/Redis)
-❌ //2do Observabilité (traces, dashboards)
-❌ //2do Versioning API + doc enrichie
+7) ❌ **Gestion d’erreurs frontend globale** (fetch + feedback utilisateur)
+
+### P1 (pro)
+
+8) ❌ **Tests unitaires/E2E** (pytest, Vitest, Playwright)
+
+9) ❌ **CI/CD** (lint, tests, build, push image, déploiement)
+
+10) ❌ **Logging structuré + metrics**
+
+11) ❌ **Documentation API enrichie** (descriptions, exemples, schémas WS)
+
+### P2 (scale)
+
+12) ❌ **Base de données** (PostgreSQL/Redis) : persistance, sessions, cache
+
+13) ❌ **Observabilité** (traces, dashboards)
+
+14) ❌ **Versioning API + doc enrichie**
+
+### P3 (qualité)
+
+15) ❌ **Performance frontend**
+    * Code splitting (lazy loading des composants)
+    * Mise en cache des requêtes
+    * Debounce sur les événements fréquents
+    * Service Worker pour le mode offline
+
+16) ❌ **Authentification avancée**
+    * Sessions utilisateurs
+    * OAuth2 (Google, GitHub)
+    * CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
+
+### P4 (contrôle)
+
+17) //2see Vérifications & contrôle général
 
 ---
 
@@ -307,87 +337,3 @@ P2 (scale)
 * Le backend ne sert pas le frontend directement.
 * Les responsabilités sont découplées pour scaler proprement.
 * APIs rapides et scalables
-
----
-
-Dans une version de Battle Plan (BP) précédente, on avait cela comme targets...
-Vérifier chaque point et qu'elles sont atteintes (sous autre forme peut-être) dans l'actuelle Roadmap
-
-🎯 Améliorations Prioritaires :
-
-1. ✅ Sécurité & Configuration (.env, CORS)
-
-    Restant à faire côté FastAPI :
-    ❌ Rate limiting
-    ❌ Protection anti‑abus (ex: quotas, IP throttling)
-
-2. Structure Backend M'odulaire
-
-    État actuel : majoritairement dans main.py
-    Problème : difficile à maintenir quand le projet grandit
-    ❌ Structure à modulariser (routers/services/etc.)
-
-3. Gestion d'Erreurs Frontend
-
-    État actuel (partiel) :
-    * ✅ Erreurs explicites sur login/refresh
-    * ✅ Retry automatique sur 401 (refresh + retry)
-    * ❌ Pas de gestion d'erreur globale pour tous les fetch
-    * ❌ Pas de feedback utilisateur centralisé en cas d'échec
-
-4. ✅ Tests Automatisés (santé + hot‑reload)
-
-    Restant à faire :
-    ❌ Gestion Tests unitaires backend (pytest)
-    ❌ Tests unitaires frontend (Vitest)
-    ❌ Tests E2E (Playwright)
-
-5. Base de Données
-
-    Ajouter PostgreSQL pour :
-    ❌ Persister les données
-    ❌ Gérer les sessions utilisateurs
-    ❌ Cache
-
-6. Monitoring & Logging (partiel)
-
-    ✅ Logging basique côté FastAPI
-    Restant à faire :
-    ❌ //2do Logging structuré (JSON)
-    ❌ //2do Monitoring des WebSockets actifs
-    ❌ //2do Métriques de performance
-
-7. CI/CD
-
-    GitHub Actions pour :
-
-    ❌ Linter le code automatiquement
-    ❌ Exécuter les tests
-    ❌ Builder les images Docker
-    ❌ Déployer automatiquement
-8. Documentation API
-
-    FastAPI génère automatiquement une doc, mais :
-    ❌ Ajouter des descriptions détaillées aux endpoints
-    ❌ Créer des exemples d'utilisation
-    ❌ Documenter les schémas WebSocket
-
-9. Performance Frontend
-
-    Optimisations possibles :
-    ❌ Code splitting (lazy loading des composants)
-    ❌ Mise en cache des requêtes
-    ❌ Debounce sur les événements fréquents
-    ❌ Service Worker pour le mode offline
-
-10. Authentification & Autorisation
-
-    État actuel :
-
-    ✅ JWT tokens (login/refresh + middleware FastAPI)
-    ❌ Sessions utilisateurs
-    ❌ Rôles et permissions (RBAC)
-    ❌ OAuth2 (Google, GitHub)
-    ❌ CF. [Contrôle de Sécu](https://github.com/protectai/vulnhuntr)
-
-//2see Vérifications & contrôle général
