@@ -121,16 +121,6 @@ backend/
 │   ├── __init__.py
 │   ├── main.py
 │   ├── config.py          # Configuration centralisée
-│   ├── routers/           # Routes organisées
-│   │   ├── __init__.py
-│   │   ├── api.py
-│   │   └── websocket.py
-│   ├── services/          # Logique métier
-│   │   └── __init__.py
-│   ├── models/            # Modèles Pydantic
-│   │   └── __init__.py
-│   └── middleware/        # CORS, auth, etc.
-│       └── __init__.py
 ```
 
 #### Django (core back‑office/auth)
@@ -148,9 +138,7 @@ backend/
 │   │   ├── wsgi.py
 │   │   └── asgi.py
 │   ├── apps/
-│   │   ├── users/             # users, roles, permissions
-│   │   ├── auth/              # auth/jwt/SSO
-│   │   └── adminpanel/        # back-office
+│   │   └── auth_api/          # auth/jwt
 │   └── requirements.txt
 ```
 
