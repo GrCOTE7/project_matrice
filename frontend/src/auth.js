@@ -1,10 +1,12 @@
 const ACCESS_TOKEN_KEY = "access_token";
 const REFRESH_TOKEN_KEY = "refresh_token";
 
-const getDjangoBaseUrl = () =>
-  import.meta.env.VITE_DJANGO_URL ||
-  window.location.origin ||
-  "http://localhost:8001";
+const getAuthBaseUrl = () => {
+  // Définir URL explicite en prod pour éviter err routage/CORS
+  const configured = import.meta.env.VITE_AUTH_BASE_URL;
+  if (!configured) return "";
+  return configured.endsWith("/") ? configured.slice(0, -1) : configured;
+};
 
 const base64UrlDecode = (value) => {
   const base64 = value.replace(/-/g, "+").replace(/_/g, "/");
@@ -49,7 +51,7 @@ export const clearTokens = () => {
 };
 
 export const login = async (username, password) => {
-  const response = await fetch(`${getDjangoBaseUrl()}/auth/login/`, {
+  const response = await fetch(`${getAuthBaseUrl()}/auth/login/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
@@ -68,7 +70,7 @@ export const refreshAccessToken = async () => {
   const { refreshToken } = getTokens();
   if (!refreshToken) throw new Error("Missing refresh token");
 
-  const response = await fetch(`${getDjangoBaseUrl()}/auth/refresh/`, {
+  const response = await fetch(`${getAuthBaseUrl()}/auth/refresh/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ refresh_token: refreshToken }),

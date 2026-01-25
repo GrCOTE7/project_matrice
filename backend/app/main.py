@@ -7,6 +7,8 @@ import logging
 import jwt
 from .config import settings
 
+MSG = "Hello from FastAPI!"
+
 # Configuration du logging
 logging.basicConfig(
     level=getattr(logging, settings.LOG_LEVEL),
@@ -73,7 +75,7 @@ active_connections: list[WebSocket] = []
 def hello(request: Request):
     user = getattr(request.state, "user", {})
     return {
-        "message": "Hello from FastAPI!",
+        "message": MSG,
         "environment": settings.ENV,
         "user_id": user.get("user_id"),
         "username": user.get("username"),
