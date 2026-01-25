@@ -267,7 +267,7 @@ python tests/test_hotreload.py
 
 ---
 
-## Roadmap priorisée (fil directeur unique)
+## Roadmap (BP - Battle Plan - Fil directeur unique)
 
 ### P0 (bloquant)
 
@@ -327,7 +327,7 @@ python tests/test_hotreload.py
 
 ### P4 (contrôle)
 
-17) //2see Vérifications & contrôle général
+17) ❌ Vérifications & contrôles global
 
 ---
 
