@@ -12,6 +12,20 @@ function App() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const getLoginErrorMessage = (err) => {
+    const raw = (err?.message || "").trim();
+    if (raw === "Missing credentials") {
+      return "Merci de saisir un identifiant ET un mot de passe.";
+    }
+    if (raw === "Invalid credentials") {
+      return "Identifiants incorrects.";
+    }
+    if (raw === "Login failed") {
+      return "Connexion impossible. Réessaie.";
+    }
+    return raw || "Connexion impossible.";
+  };
+
   useEffect(() => {
     if (!isAuthenticated) return;
 
@@ -32,7 +46,7 @@ function App() {
       setUsername("");
       setPassword("");
     } catch (err) {
-      setError(err.message || "Login failed");
+      setError(getLoginErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -46,8 +60,8 @@ function App() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-50 text-slate-800 font-[Roboto]">
-      <div className="max-w-4xl w-full mx-auto p-8 text-center bg-white rounded-2xl shadow-sm">
-        <h1 className="text-4xl font-bold mb-4 text-blue-600">
+      <div className="border min-w-100 max-w-4xl w-3/6 mx-auto p-8 text-center bg-white rounded-2xl shadow-sm">
+        <h1 className="text-4xl mx-8 font-bold mb-4 text-blue-600">
           Frontend Matrice (React)
         </h1>
 
