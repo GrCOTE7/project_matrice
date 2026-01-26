@@ -259,8 +259,6 @@ python tests/test_hotreload.py
 
 ## Roadmap (BP - Battle Plan - Fil directeur unique)
 
-### P0 (bloquant)
-
 1) ✅ **Sécurité & configuration (.env, CORS, secrets)**
     * Fichiers .env pour tous les services
     * CORS configuré (FastAPI + Django)
