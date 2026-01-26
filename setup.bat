@@ -150,6 +150,18 @@ if errorlevel 1 (
 )
 echo.
 
+REM Creation du user standard user/user pour le dev
+echo ----------------------------------------
+echo Creation du compte user (dev)...
+echo ----------------------------------------
+python backend\django\manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='user').exists() or User.objects.create_user('user', 'user@localhost', 'user')"
+if errorlevel 1 (
+    echo [INFO] Compte user deja existant ou erreur
+) else (
+    echo [OK] Compte user cree - Login: user / Password: user
+)
+echo.
+
 echo ========================================
 echo ========================================
 echo   Installation terminee !

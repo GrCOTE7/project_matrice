@@ -120,7 +120,7 @@ if errorlevel 1 (
     echo.
     echo ===================================================
     echo.
-    echo   *** ALERTE: CERTAINS SERVICES NE RÉPONDENT PAS ***
+    echo   *** ❌ ALERTE: CERTAINS SERVICES NE RÉPONDENT PAS ***
     echo.
     echo     Vérifiez les fenêtres réduites dans la barre
     echo     des tâches pour voir les erreurs éventuelles.
@@ -130,7 +130,8 @@ if errorlevel 1 (
 ) else (
     echo.
     echo ============================================================
-    echo   Tous les SERVICES sont OPÉRATIONNELS!
+    echo [INFO] Compte admin deja existant ou erreur
+    echo   ✅ Tous les SERVICES sont OPÉRATIONNELS!
     echo   NOTE: Les fenêtres sont réduites dans la barre des tâches.
     echo         Fermez-les manuellement pour arrêter les serveurs.
     echo ============================================================
