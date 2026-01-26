@@ -6,7 +6,7 @@ REM ============================================
 
 echo.
 echo ========================================
-echo   Project Matrice - Setup Securite
+echo   Project Matrice - Setup Securité
 echo ========================================
 echo.
 

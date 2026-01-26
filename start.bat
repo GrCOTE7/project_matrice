@@ -84,13 +84,37 @@ echo.
     echo ================================================
 
 echo.
-echo [5/5] Attente du demarrage des services (7")...
-timeout /t 7 /nobreak >nul
+echo [5/5] Attente initiale (7s), puis 5 tentatives chaque seconde...
+set /a INITIAL_DELAY=7
+set /a RETRY_MAX=5
+set /a RETRY_DELAY=1
+set /a RETRIES=0
+
+timeout /t %INITIAL_DELAY% /nobreak >nul
+
+:wait_services
+call .venv\Scripts\activate >nul 2>&1
+python tests\test_health.py >nul 2>&1
+if errorlevel 1 (
+    set /a RETRIES+=1
+    if %RETRIES% GTR %RETRY_MAX% goto wait_timeout
+    timeout /t %RETRY_DELAY% /nobreak >nul
+    goto wait_services
+)
 
 echo.
-echo [*] Execution des Health Checks...
+echo [*] Services prets. Execution des Health Checks...
 call .venv\Scripts\activate
-python tests/test_health.py
+python tests\test_health.py
+goto health_done
+
+:wait_timeout
+echo.
+echo [*] Services non prets apres %RETRY_MAX% tentatives. Execution des Health Checks...
+call .venv\Scripts\activate
+python tests\test_health.py
+
+:health_done
 
 if errorlevel 1 (
     echo.
