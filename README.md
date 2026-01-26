@@ -278,7 +278,7 @@ python tests/test_hotreload.py
 
 5) ✅ **Rate limiting & protection anti‑abus** (quotas, IP throttling)
 
-6) ❌ **Structure FastAPI modulaire** (routers/services/etc.)
+6) ✅ **Structure FastAPI modulaire** (routers/services/etc.)
 
 7) ✅ **Gestion d’erreurs frontend globale (base)** (fetch + feedback utilisateur)
 
@@ -301,6 +301,7 @@ python tests/test_hotreload.py
     * Mise en cache des requêtes
     * Debounce sur les événements fréquents
     * Service Worker pour le mode offline
+    * Possibilité d'évoluer vers le multilangues (front uniquement)
 
 16) ❌ **Authentification avancée**
     * Sessions utilisateurs

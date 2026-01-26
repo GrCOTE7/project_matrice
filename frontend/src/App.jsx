@@ -4,10 +4,13 @@ import { useBackendStatus } from "./context/BackendContext";
 import { authFetch, clearTokens, hasValidSession, login } from "./auth";
 
 function App() {
+  // Payloads (contenu utile) de réponse de l'API backend
   const [message, setMessage] = useState("Loading...");
   const { isConnected } = useBackendStatus();
   const [isAuthenticated, setIsAuthenticated] = useState(hasValidSession());
   const [username, setUsername] = useState("");
+  const [loggedUsername, setLoggedUsername] = useState("");
+  const [adminNote, setAdminNote] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +32,7 @@ function App() {
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    authFetch("/api/hello")
+    authFetch("/api/admin/hello")
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
@@ -37,10 +40,16 @@ function App() {
         }
         return data;
       })
-      .then((data) => setMessage(data.message))
+      .then((data) => {
+        setMessage(data.message);
+        setLoggedUsername(data.username || "");
+        setAdminNote(data.admin_note || "");
+      })
       .catch((err) => {
         const raw = (err?.message || "Unauthorized").trim();
         setMessage(raw || "Unauthorized");
+        setLoggedUsername("");
+        setAdminNote("");
       });
   }, [isAuthenticated]);
 
@@ -65,6 +74,8 @@ function App() {
     clearTokens();
     setIsAuthenticated(false);
     setMessage("Loading...");
+    setLoggedUsername("");
+    setAdminNote("");
   };
 
   return (
@@ -117,15 +128,31 @@ function App() {
         ) : (
           <>
             <p className="text-lg mb-4 text-slate-600">
-              Backend says:{" "}
+              Backend says
+              {loggedUsername ? (
+                <>
+                  {" "}
+                  to{" "}
+                  <b>
+                    {loggedUsername.charAt(0).toUpperCase() +
+                      loggedUsername.slice(1)}
+                  </b>
+                </>
+              ) : null}
+              :{" "}
               <span
-                className={`font-semibold transition-all duration-500 ${
+                className={`font-semibold transition-all duration-500 whitespace-pre-line ${
                   isConnected
                     ? "text-blue-500 px-1"
                     : "bg-red-400/20 rounded-md text-red-500 animate-pulse italic px-1"
                 }`}
               >
                 {message}
+                {adminNote ? (
+                  <span className="block italic text-sm text-slate-500">
+                    {adminNote}
+                  </span>
+                ) : null}
               </span>
             </p>
             <button
@@ -149,4 +176,3 @@ function App() {
 }
 
 export default App;
-
