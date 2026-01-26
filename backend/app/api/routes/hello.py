@@ -12,7 +12,7 @@ from ...config import settings
 router = APIRouter()
 
 
-@router.get("/api/hello", response_model=HelloResponse)
+@router.get("/hello", response_model=HelloResponse)
 @limiter.limit(settings.RATE_LIMIT_HELLO)
 def hello(
     request: Request,
@@ -21,7 +21,7 @@ def hello(
     return build_hello_response(user)
 
 
-@router.get("/api/admin/hello", response_model=AdminHelloResponse)
+@router.get("/admin/hello", response_model=AdminHelloResponse)
 @limiter.limit(settings.RATE_LIMIT_HELLO)
 def admin_hello(
     request: Request,

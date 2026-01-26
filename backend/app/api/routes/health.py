@@ -12,7 +12,7 @@ server_id = str(uuid.uuid4())
 active_connections: list[WebSocket] = []
 
 
-@router.get("/api/health", response_model=HealthResponse)
+@router.get("/health", response_model=HealthResponse)
 @limiter.limit(settings.RATE_LIMIT_HEALTH)
 def health_check(request: Request):
     """Endpoint de santé pour monitoring."""

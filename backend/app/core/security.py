@@ -10,6 +10,8 @@ async def jwt_middleware(request: Request, call_next):
 
     if not path.startswith("/api") or path.startswith("/api/health"):
         return await call_next(request)
+    if path.startswith("/api/v1/health"):
+        return await call_next(request)
 
     auth_header = request.headers.get("Authorization", "")
     if not auth_header.startswith("Bearer "):

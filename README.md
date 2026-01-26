@@ -318,4 +318,5 @@ python tests/test_hotreload.py
 * Le frontend appelle les APIs via le proxy.
 * Le backend ne sert pas le frontend directement.
 * Les responsabilités sont découplées pour scaler proprement.
+* Les endpoints FastAPI sont disponibles en **/api** (legacy) et en **/api/v1** (versionné).
 * APIs rapides et scalables
