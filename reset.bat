@@ -29,6 +29,7 @@ echo Suppression des fichiers et dossiers...
 rmdir /s /q .venv
 del /f /q .env
 del /f /q backend\.env
+
 rmdir /s /q backend\app\__pycache__
 rmdir /s /q backend\app\api\__pycache__
 rmdir /s /q backend\app\api\routes\__pycache__
@@ -36,12 +37,15 @@ rmdir /s /q backend\app\core\__pycache__
 rmdir /s /q backend\app\core\routes\__pycache__
 rmdir /s /q backend\app\schemas\__pycache__
 rmdir /s /q backend\app\services\__pycache__
+
 rmdir /s /q backend\django\apps\__pycache__
 rmdir /s /q backend\django\apps\auth_api\__pycache__
 rmdir /s /q backend\django\config\__pycache__
 del /f /q backend\django\.env
 del /f /q backend\django\db.sqlite3
+
 rmdir /s /q frontend\node_modules
+del /f /q frontend\.env.local
 echo Réinitialisation terminée.
 
 echo.

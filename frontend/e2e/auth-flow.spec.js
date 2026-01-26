@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test("login admin puis accès contenu", async ({ page }) => {
-  const username = process.env.E2E_USERNAME || "admin";
-  const password = process.env.E2E_PASSWORD || "admin";
+  const username = process.env.E2E_USERNAME || "pleaseDefineItInDotEnvDotLocal";
+  const password = process.env.E2E_PASSWORD || "pleaseDefineItInDotEnvDotLocal";
 
   await page.goto("/");
 

@@ -77,7 +77,7 @@ start "Frontend - Vite" /min cmd /c "cd frontend & npm run dev"
 
 echo.
     echo ================================================
-    echo   Services lances en ARRIERE-PLAN (reduits).
+    echo   Services lancés en ARRIÈRE-PLAN (réduits).
     echo   - Backend FastAPI: http://localhost:8000/api/hello
     echo   - Backend Django: http://localhost:8001/admin/
     echo   - Frontend: http://localhost:5173
@@ -130,7 +130,7 @@ if errorlevel 1 (
 ) else (
     echo.
     echo ============================================================
-    echo [INFO] Compte admin deja existant ou erreur
+    echo [INFO] Compte admin déjà existant ou erreur
     echo   ✅ Tous les SERVICES sont OPÉRATIONNELS!
     echo   NOTE: Les fenêtres sont réduites dans la barre des tâches.
     echo         Fermez-les manuellement pour arrêter les serveurs.

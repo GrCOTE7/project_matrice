@@ -124,6 +124,12 @@ if not exist "backend\django\.env" (
     )
 )
 
+if not exist "frontend\.env.local" (
+    echo [INFO] Fichier frontend/.env.local non trouve - Creation depuis frontend/.env.local_example...
+    copy frontend\.env.local_example frontend\.env.local
+    echo [ATTENTION] Editez frontend/.env.local avec vos valeurs E2E avant de lancer les tests
+)
+
 echo [OK] Fichiers .env configures
 echo.
 

@@ -1,4 +1,8 @@
+import dotenv from "dotenv";
 import { defineConfig } from "@playwright/test";
+
+dotenv.config({ path: ".env.local" });
+dotenv.config({ path: ".env" });
 
 export default defineConfig({
   testDir: "./e2e",

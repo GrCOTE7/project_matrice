@@ -51,10 +51,16 @@ if errorlevel 1 goto failed
 
 cd /d "%~dp0"
 
+echo ===================================================
+echo   ✅ Tous les tests ont reussi
+echo ===================================================
 echo.
- echo ===================================================
- echo   ✅ Tous les tests ont reussi
- echo ===================================================
+
+if exist "frontend\playwright-report\index.html" (
+    cd /d "%~dp0frontend"
+    @REM call npx playwright show-report
+    cd /d "%~dp0"
+)
 exit /b 0
 
 :failed
