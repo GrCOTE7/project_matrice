@@ -26,6 +26,7 @@ echo Suppression des fichiers et dossiers...
 @REM - backend\django\db.sqlite3
 @REM - frontend\node_modules
 
+rmdir /s /q .pytest_cache
 rmdir /s /q .venv
 del /f /q .env
 del /f /q backend\.env
@@ -49,6 +50,6 @@ del /f /q frontend\.env.local
 echo Réinitialisation terminée.
 
 echo.
-call setup.bat
+@REM call setup.bat
 echo.
 echo Configuration réinitialisée et environnement remis à zéro.

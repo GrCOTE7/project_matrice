@@ -13,9 +13,6 @@ build/
 # Env virtuel (un seul à la racine)
 .venv/
 
-# BE/Django - DB
-/backend/django/db.sqlite3
-
 # Node
 node_modules/
 dist/
@@ -35,3 +32,9 @@ Thumbs.db
 # Env files
 .env
 .env.local
+
+# BE/Django - DB
+/backend/django/db.sqlite3
+
+# FE
+/frontend/playwright-report/index.html
