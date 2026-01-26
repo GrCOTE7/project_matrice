@@ -3,3 +3,5 @@ django-browser-reload
 django-cors-headers
 python-dotenv
 PyJWT
+pytest
+pytest-django

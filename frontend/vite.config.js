@@ -11,6 +11,10 @@ const DJANGO_URL = process.env.VITE_DJANGO_URL || "http://localhost:8001";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  test: {
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.js",
+  },
   server: {
     host: true,
     watch: {
