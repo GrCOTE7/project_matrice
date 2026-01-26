@@ -25,12 +25,21 @@ REM Installation des dependances backend FastAPI
 echo ----------------------------------------
 echo Installation des dependances FastAPI...
 echo ----------------------------------------
-if exist .venv (
+if exist .venv\Scripts\python.exe (
     echo Environnement virtuel detecte - racine
     call .venv\Scripts\activate
 ) else (
+    if exist .venv (
+        echo [INFO] Environnement virtuel incomplet - suppression...
+        rmdir /s /q .venv
+    )
     echo Creation de l'environnement virtuel - racine...
     python -m venv .venv
+    if not exist .venv\Scripts\python.exe (
+        echo [ERREUR] Echec de creation de l'environnement virtuel.
+        pause
+        exit /b 1
+    )
     call .venv\Scripts\activate
 )
 
@@ -57,29 +66,6 @@ if errorlevel 1 (
     exit /b 1
 )
 echo [OK] Dependances Django installees
-echo.
-
-REM Migrations Django
-echo ----------------------------------------
-echo Execution des migrations Django...
-echo ----------------------------------------
-python backend\django\manage.py migrate
-if errorlevel 1 (
-    echo [AVERTISSEMENT] Migrations echouees
-)
-echo [OK] Migrations executees
-echo.
-
-REM Creation du superuser admin/admin pour le dev
-echo ----------------------------------------
-echo Creation du compte admin (dev)...
-echo ----------------------------------------
-python backend\django\manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@localhost', 'admin')"
-if errorlevel 1 (
-    echo [INFO] Compte admin deja existant ou erreur
-) else (
-    echo [OK] Compte admin cree - Login: admin / Password: admin
-)
 echo.
 
 REM Retour a la racine
@@ -139,6 +125,29 @@ if not exist "backend\django\.env" (
 )
 
 echo [OK] Fichiers .env configures
+echo.
+
+REM Migrations Django
+echo ----------------------------------------
+echo Execution des migrations Django...
+echo ----------------------------------------
+python backend\django\manage.py migrate
+if errorlevel 1 (
+    echo [AVERTISSEMENT] Migrations echouees
+)
+echo [OK] Migrations executees
+echo.
+
+REM Creation du superuser admin/admin pour le dev
+echo ----------------------------------------
+echo Creation du compte admin (dev)...
+echo ----------------------------------------
+python backend\django\manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@localhost', 'admin')"
+if errorlevel 1 (
+    echo [INFO] Compte admin deja existant ou erreur
+) else (
+    echo [OK] Compte admin cree - Login: admin / Password: admin
+)
 echo.
 
 echo ========================================

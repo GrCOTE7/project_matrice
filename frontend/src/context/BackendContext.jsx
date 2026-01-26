@@ -14,7 +14,7 @@ export const BackendProvider = ({ children }) => {
 
     const connect = () => {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${protocol}//${window.location.host}/ws/reload`;
+      const wsUrl = `${protocol}//${window.location.host}/api/ws/reload`;
 
       ws = new WebSocket(wsUrl);
 
