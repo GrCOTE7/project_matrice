@@ -282,7 +282,7 @@ python tests/test_hotreload.py
 
 7) ✅ **Gestion d’erreurs frontend globale (base)** (fetch + feedback utilisateur)
 
-8) ❌ **Tests unitaires/E2E** (pytest, Vitest, Playwright)
+8) ✅ **Tests unitaires/E2E** (pytest, Vitest, Playwright)
 
 9) ❌ **CI/CD** (lint, tests, build, push image, déploiement)
 
