@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 
+from ...core.dependencies import get_current_admin, get_current_user
 from ...core.limiter import limiter
-from ...core.security import require_roles
 from ...schemas.hello import AdminHelloResponse, HelloResponse
 from ...services.hello_service import (
     build_admin_hello_response,
@@ -14,8 +14,10 @@ router = APIRouter()
 
 @router.get("/api/hello", response_model=HelloResponse)
 @limiter.limit(settings.RATE_LIMIT_HELLO)
-def hello(request: Request):
-    user = getattr(request.state, "user", {})
+def hello(
+    request: Request,
+    user: dict = Depends(get_current_user),
+):
     return build_hello_response(user)
 
 
@@ -23,7 +25,6 @@ def hello(request: Request):
 @limiter.limit(settings.RATE_LIMIT_HELLO)
 def admin_hello(
     request: Request,
-    _rbac: None = Depends(require_roles("admin")),
+    user: dict = Depends(get_current_admin),
 ):
-    user = getattr(request.state, "user", {})
     return build_admin_hello_response(user)
