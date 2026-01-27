@@ -1,6 +1,6 @@
 # Project Matrice
 
-ATTENTION: Dépôt déprecié... Et remplacé" suivi là : https://github.com/GrCOTE7/pyproject_template
+ATTENTION: Dépôt déprecié... Et remplacé et suivi là : https://github.com/GrCOTE7/pyproject_template
 
 ## Application web professionnelle
 
